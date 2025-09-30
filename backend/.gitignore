@@ -1,0 +1,11 @@
+.vercel
+.env
+
+/node_modules
+
+Allitems.http
+Login.http
+seedId.js
+seed.js
+seedRestro.js
+seedTable.js

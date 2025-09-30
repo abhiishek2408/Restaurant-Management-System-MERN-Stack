@@ -1,0 +1,46 @@
+# Node.js / React
+node_modules/
+build/
+dist/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React / Frontend
+Frontend/vendor/
+Frontend/src/image/*.jpg
+Frontend/src/image/*.png
+Frontend/src/image/*.avif
+Frontend/src/image/*.jpeg
+Frontend/src/image/*.gif
+
+# PHP / Composer
+backend/vendor/
+backend/vendor/composer/
+backend/vendor/autoload.php
+backend/vendor/**/LICENSE
+backend/vendor/**/README.md
+
+# Python / Backend (if any)
+__pycache__/
+*.pyc
+
+# IDE / OS Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs & Misc
+*.log
+*.csv
+*.json
+*.lock
+*.bak
+
+# Git LFS suggestion for large files
+# You can track large files (like huge CSVs or JSONs) using Git LFS
+# Example:
+# git lfs track "backend/utility/*.csv"
+# git lfs track "backend/utility/*.json"

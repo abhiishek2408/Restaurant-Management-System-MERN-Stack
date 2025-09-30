@@ -1,0 +1,372 @@
+     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+          margin: 0;
+          font-family: 'Inter', sans-serif;
+          background-color: #f0f2f5;
+          color: #333;
+        }
+
+        .admin-offers-dashboard {
+          
+          max-width: 1200px;
+          margin: 0 auto;
+          background: #ffffff;
+          border-radius: 12px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+          animation: fadeIn 0.5s ease-out;
+
+          width: 80%;
+          max-width: 900px;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-title {
+          font-size: 2.2rem;
+          margin-bottom: 1.5rem;
+          color: #e91e63; /* A vibrant pink */
+          text-align: center;
+          font-weight: 700;
+          letter-spacing: -0.5px;
+        }
+
+        .message-display {
+          position: fixed;
+          top: 1.5rem;
+          right: 1.5rem;
+          padding: 0.8rem 1.5rem;
+          border-radius: 8px;
+          color: white;
+          font-weight: 600;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          z-index: 1000;
+          animation: slideInRight 0.4s ease-out;
+        }
+
+        @keyframes slideInRight {
+          from { opacity: 0; transform: translateX(50px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+
+        .message-display.success { background: linear-gradient(45deg, #4CAF50, #8BC34A); }
+        .message-display.error { background: linear-gradient(45deg, #F44336, #FF9800); }
+
+        .add-offer-button {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 0.8rem 1.5rem;
+          background: linear-gradient(45deg, #e91e63, #ff4081); /* Pink gradient */
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+          margin-bottom: 2rem;
+          margin-left: auto;
+          margin-right: auto;
+          display: block; /* Center the button */
+        }
+
+        .add-offer-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+        }
+
+        .add-offer-button svg {
+          margin-right: 5px;
+        }
+
+        .loading-text {
+          text-align: center;
+          font-size: 1.1rem;
+          color: #666;
+          padding: 2rem;
+        }
+
+        .table-container {
+  overflow-x: auto;
+  margin: 1.5rem auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+  width: 90%; /* Decrease width from 100% to 80% */
+  max-width: 1000px; /* Optional: limit maximum width */
+}
+
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          min-width: 700px; /* Ensure table doesn't get too small */
+        }
+
+        th, td {
+          padding: 1rem 1.2rem;
+          text-align: left;
+          font-size: 0.95rem;
+          border-bottom: 1px solid #f0f0f0;
+        }
+
+        th {
+          background: #ffebee; /* Light pink header */
+          color: #e91e63;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+          background: #fdf5f7; /* Very light pink for even rows */
+        }
+
+        tr:hover {
+          background-color: #fff0f5; /* Lighter pink on hover */
+          transition: background-color 0.2s ease;
+        }
+
+        td {
+          color: #555;
+        }
+
+        .modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.6);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 999;
+          backdrop-filter: blur(5px);
+          animation: fadeInOverlay 0.3s ease-out;
+        }
+
+        @keyframes fadeInOverlay {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .modal-content {
+          background: white;
+          padding: 1.5rem; /* Reduced padding */
+          border-radius: 12px;
+          width: 90%;
+          max-width: 550px; /* Slightly reduced max-width */
+          max-height: 95vh; /* Increased max-height to allow more content */
+          overflow-y: auto; /* Keep auto scroll for safety */
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+          animation: zoomIn 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes zoomIn {
+          from { transform: scale(0.8); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-content h3 {
+          font-size: 1.6rem; /* Slightly smaller heading */
+          color: #e91e63;
+          margin-bottom: 1.2rem; /* Reduced margin */
+          text-align: center;
+        }
+
+        /* Adjusted input styles for smaller and attractive design */
+        .modal-content .input-row {
+            display: flex;
+            gap: 0.6rem; /* Reduced space between inputs in a row */
+            margin-bottom: 0.6rem; /* Reduced space below the row */
+        }
+
+        .modal-content .input-row input,
+        .modal-content .input-row textarea {
+            flex: 1; /* Distribute space equally */
+            width: auto; /* Override calc(100% - 24px) */
+        }
+
+        .modal-content input:not([type="checkbox"]),
+        .modal-content textarea {
+          width: calc(100% - 16px); /* Adjusted for padding and border */
+          margin-bottom: 0.6rem; /* Further reduced margin */
+          padding: 0.5rem 8px; /* Further reduced padding */
+          font-size: 0.9rem; /* Further smaller font */
+          border: 1px solid #e0e0e0; /* Lighter border */
+          border-radius: 6px; /* Slightly more rounded corners */
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+          box-sizing: border-box;
+        }
+
+        .modal-content input:not([type="checkbox"]):focus,
+        .modal-content textarea:focus {
+          border-color: #e91e63;
+          box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.25); /* Stronger focus shadow */
+          outline: none;
+        }
+
+        .modal-content textarea {
+          min-height: 50px; /* Significantly smaller min-height */
+          resize: vertical;
+        }
+
+        .modal-content .time-row {
+          display: flex;
+          gap: 0.6rem; /* Reduced gap */
+          margin-bottom: 0.6rem; /* Reduced margin */
+        }
+
+        .modal-content .time-row input {
+          flex: 1;
+          width: auto;
+        }
+
+        .modal-content label {
+          display: flex;
+          align-items: center;
+          margin-bottom: 0.6rem; /* Reduced margin */
+          font-size: 0.9rem; /* Consistent font size */
+          color: #555;
+        }
+
+        .modal-content label input[type="checkbox"] {
+          width: 16px; /* Slightly smaller checkbox */
+          height: 16px; /* Slightly smaller checkbox */
+          margin-right: 6px; /* Reduced margin */
+          accent-color: #e91e63;
+          cursor: pointer;
+        }
+
+        .modal-content input[type="file"] {
+          padding: 0.4rem 0; /* Reduced padding */
+          border: none;
+          font-size: 0.9rem; /* Consistent font size */
+        }
+
+        .modal-buttons {
+          margin-top: 1.2rem; /* Reduced margin */
+          display: flex;
+          justify-content: flex-end;
+          gap: 0.8rem; /* Reduced gap */
+        }
+
+        .modal-buttons button {
+          padding: 0.7rem 1.2rem; /* Reduced padding */
+          font-size: 0.9rem; /* Reduced font size */
+          font-weight: 600;
+          cursor: pointer;
+          border: none;
+          border-radius: 8px;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-add {
+          background: linear-gradient(45deg, #4CAF50, #8BC34A);
+          color: white;
+        }
+
+        .btn-add:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-cancel {
+          background: linear-gradient(45deg, #F44336, #FF9800);
+          color: white;
+        }
+
+        .btn-cancel:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(244, 67, 54, 0.3);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+          .admin-offers-dashboard {
+            padding: 1.5rem;
+            margin: 1rem;
+          }
+          .dashboard-title {
+            font-size: 1.8rem;
+          }
+          .modal-content {
+            padding: 1.2rem; /* Further reduced padding for smaller screens */
+            width: 95%;
+          }
+          .modal-content h3 {
+            font-size: 1.4rem;
+          }
+          .modal-content .time-row,
+          .modal-content .input-row {
+            flex-direction: column;
+            gap: 0.4rem; /* Further reduced gap */
+          }
+          th, td {
+            padding: 0.8rem;
+            font-size: 0.8rem;
+          }
+          .add-offer-button {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+          }
+          .modal-buttons button {
+            padding: 0.6rem 1rem; /* Further reduced padding */
+            font-size: 0.85rem; /* Further reduced font size */
+          }
+          /* Adjusted input styles for smaller screens */
+          .modal-content input:not([type="checkbox"]),
+          .modal-content textarea {
+            padding: 0.5rem 8px; /* Consistent with general small input style */
+            font-size: 0.85rem; /* Consistent with general small input style */
+            margin-bottom: 0.6rem;
+          }
+          .modal-content label {
+            font-size: 0.85rem;
+          }
+          .modal-content label input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+          }
+          .modal-content input[type="file"] {
+            font-size: 0.85rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .admin-offers-dashboard {
+            padding: 1rem;
+            margin: 0.5rem;
+            border-radius: 8px;
+          }
+          .dashboard-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+          }
+          .message-display {
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+          }
+          .modal-content {
+            padding: 0.8rem; /* Even more reduced padding */
+          }
+          .modal-buttons {
+            flex-direction: column;
+            gap: 0.6rem;
+          }
+          .modal-buttons button {
+            width: 100%;
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+          }
+        }

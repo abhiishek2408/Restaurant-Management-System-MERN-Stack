@@ -1,0 +1,226 @@
+/* BarcodeScannerInvoice.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+.product-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffe6f0;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2);
+}
+
+.title {
+  text-align: center;
+  color: #d63384;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 10px 14px;
+  width: 60%;
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-btn {
+  padding: 10px 18px;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.search-btn:hover {
+  background-color: #e055a0;
+}
+
+.error {
+  color: #e63946;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.loading {
+  color: #a33e8b;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.product-card {
+  background: #fff0f5;
+  border: 2px solid #ffc0cb;
+  border-radius: 12px;
+  width: 220px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.15);
+  text-align: center;
+}
+
+.product-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-info h3 {
+  color: #d63384;
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.product-description {
+  font-size: 13px;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.product-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin: 6px 0;
+}
+
+.product-price {
+  font-weight: bold;
+  color: #ff69b4;
+}
+
+.product-badge {
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 20px;
+  color: white;
+}
+
+.vegan {
+  background: #28a745;
+}
+
+.non-vegan {
+  background: #ff6b6b;
+}
+
+.product-rating {
+  font-size: 14px;
+  color: #444;
+}
+
+.cart-btn {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  font-weight: bold;
+  border-radius: 6px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cart-btn:hover {
+  background-color: #e055a0;
+}
+
+.cart-container {
+  margin-top: 30px;
+  background-color: #fff;
+  border: 2px solid #ffc0cb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 12px rgba(255, 105, 180, 0.15);
+}
+
+.cart-title {
+  text-align: center;
+  font-size: 22px;
+  color: #d63384;
+  margin-bottom: 16px;
+}
+
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fffafc;
+}
+
+.cart-table th,
+.cart-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #f2c0d3;
+  font-size: 14px;
+}
+
+.cart-table th {
+  background-color: #ffb6c1;
+  color: white;
+  font-weight: bold;
+}
+
+.remove-btn {
+  background-color: #e63946;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.remove-btn:hover {
+  background-color: #c92a38;
+}
+
+.cart-total {
+  text-align: right;
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #d63384;
+}
+
+.print-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.print-btn:hover {
+  background-color: #e055a0;
+}

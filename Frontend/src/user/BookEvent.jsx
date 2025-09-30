@@ -18,7 +18,7 @@ const SearchEvents = () => {
   useEffect(() => {
     const fetchVenues = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/event/venues");
+        const res = await axios.get("https://restaurant-management-system-mern-stack.onrender.com//api/event/venues");
         setVenues(res.data);
       } catch (err) {
         console.error(err);
@@ -32,7 +32,7 @@ const SearchEvents = () => {
     try {
       const query = new URLSearchParams({ date, venueId }).toString();
       const res = await axios.get(
-        `http://localhost:5000/api/event/search?${query}`
+        `https://restaurant-management-system-mern-stack.onrender.com//api/event/search?${query}`
       );
       setEvents(res.data);
     } catch (err) {
@@ -44,7 +44,7 @@ const SearchEvents = () => {
   const fetchResources = async (eventId) => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/event-booking/resources/${eventId}`
+        `https://restaurant-management-system-mern-stack.onrender.com//api/event-booking/resources/${eventId}`
       );
       setResources(res.data);
     } catch (err) {
@@ -91,7 +91,7 @@ const SearchEvents = () => {
   if (!date) return alert("Please select a date before booking.");
 
   try {
-    const res = await axios.post(`http://localhost:5000/api/event-booking`, {
+    const res = await axios.post(`https://restaurant-management-system-mern-stack.onrender.com//api/event-booking`, {
       userId: user._id,
       eventId: selectedEvent._id,
       date, // ✅ Include date

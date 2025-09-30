@@ -38,7 +38,7 @@ function BookTable() {
     setIsLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/tablebook/table", data);
+      const res = await axios.post("https://restaurant-management-system-mern-stack.onrender.com//api/tablebook/table", data);
       if (res.data.status === "success") {
         setIsSuccess(true);
         setMessage(res.data.message);

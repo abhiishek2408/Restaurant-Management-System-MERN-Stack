@@ -35,7 +35,7 @@ const MenuPage = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `http://localhost:5000/api/food-items/category?category=${category}`
+      `https://restaurant-management-system-mern-stack.onrender.com//api/food-items/category?category=${category}`
     )
       .then((res) => res.json())
       .then((data) => {

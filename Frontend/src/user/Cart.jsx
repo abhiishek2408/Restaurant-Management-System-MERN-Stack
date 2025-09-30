@@ -38,7 +38,7 @@ useEffect(() => {
   }
   const fetchCart = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/cart/get-cart/${user._id}`);
+      const res = await axios.get(`https://restaurant-management-system-mern-stack.onrender.com//api/cart/get-cart/${user._id}`);
       if (res.data.success) {
         setCartDetails(res.data.cart);
         setError(null);
@@ -146,7 +146,7 @@ const handleRemoveItem = async (id, e) => {
   if (!window.confirm("Delete this item?")) return;
 
   try {
-    const res = await axios.delete(`http://localhost:5000/api/cart/delete-from-cart/${id}`);
+    const res = await axios.delete(`https://restaurant-management-system-mern-stack.onrender.com//api/cart/delete-from-cart/${id}`);
 
     if (res.data.success) {
       alert("Item deleted successfully!");
@@ -191,7 +191,7 @@ const handleRemoveItem = async (id, e) => {
       selectedAddressId === 0
         ? currentLocation
         : addresses.find((a) => a.id === selectedAddressId);
-    const res = await axios.post("http://localhost:5000/api/paypal/create-order", {
+    const res = await axios.post("https://restaurant-management-system-mern-stack.onrender.com//api/paypal/create-order", {
       total: calculateTotal(),
       address: selectedAddress,
     });
@@ -237,7 +237,7 @@ const handleSaveAddress = async () => {
     console.log("Payload being sent:", payload);
 
     const res = await axios.post(
-      "http://localhost:5000/api/cart/add_user_addresses",
+      "https://restaurant-management-system-mern-stack.onrender.com//api/cart/add_user_addresses",
       payload,
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -259,7 +259,7 @@ const handleSaveAddress = async () => {
 
       // Refresh address list
       const addrRes = await axios.get(
-        `http://localhost:5000/api/cart/get_user_addresses/${user._id}`,
+        `https://restaurant-management-system-mern-stack.onrender.com//api/cart/get_user_addresses/${user._id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -297,7 +297,7 @@ useEffect(() => {
   const fetchAddresses = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/cart/get_user_addresses/${user._id}`
+        `https://restaurant-management-system-mern-stack.onrender.com//api/cart/get_user_addresses/${user._id}`
       );
 
       if (res.data.success) {

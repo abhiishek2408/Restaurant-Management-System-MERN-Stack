@@ -37,7 +37,7 @@ function ChefSpecialMenu() {
     setFoodItems([]);
  
     fetch(
-      `http://localhost:5000/api/food-items/chef_special?city=${encodeURIComponent(
+      `https://restaurant-management-system-mern-stack.onrender.com//api/food-items/chef_special?city=${encodeURIComponent(
         cityName
       )}`
     )
@@ -83,7 +83,7 @@ function ChefSpecialMenu() {
 
 
     axios
-      .post("http://localhost:5000/api/cart/add-to-cart", cartData, {
+      .post("https://restaurant-management-system-mern-stack.onrender.com//api/cart/add-to-cart", cartData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://restaurant-management-system-mern-stack.onrender.com//api/auth/register",
         formData,
         {
           withCredentials: true,
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/verify",
+        "https://restaurant-management-system-mern-stack.onrender.com//api/auth/verify",
         { userId, otp },
         { withCredentials: true }
       );
@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://restaurant-management-system-mern-stack.onrender.com//api/auth/login",
         { email, password },
         { withCredentials: true }
       );
@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       await axios.post(
-        "http://localhost:5000/api/auth/logout",
+        "https://restaurant-management-system-mern-stack.onrender.com//api/auth/logout",
         {},
         { withCredentials: true }
       );
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/forgot-password",
+        "https://restaurant-management-system-mern-stack.onrender.com//api/auth/forgot-password",
         { email },
         { withCredentials: true }
       );

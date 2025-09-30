@@ -60,7 +60,7 @@ const MyBookings = () => {
     const fetchBookings = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("https://restaurant-management-system-mern-stack.onrender.com//api/event-booking/my-bookings", {
+        const res = await axios.get("https://restaurant-management-system-mern-stack.onrender.com/api/event-booking/my-bookings", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

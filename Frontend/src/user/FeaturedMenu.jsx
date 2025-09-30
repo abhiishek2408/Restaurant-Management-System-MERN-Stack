@@ -34,7 +34,7 @@ function FoodItemsByLocation() {
     setFoodItems([]);
 
     fetch(
-      `https://restaurant-management-system-mern-stack.onrender.com//api/food-items/all?city=${encodeURIComponent(
+      `https://restaurant-management-system-mern-stack.onrender.com/api/food-items/all?city=${encodeURIComponent(
         cityName
       )}`
     )
@@ -83,7 +83,7 @@ function FoodItemsByLocation() {
 
 
     axios
-      .post("https://restaurant-management-system-mern-stack.onrender.com//api/cart/add-to-cart", cartData, {
+      .post("https://restaurant-management-system-mern-stack.onrender.com/api/cart/add-to-cart", cartData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })

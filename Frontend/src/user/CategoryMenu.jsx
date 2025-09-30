@@ -52,7 +52,7 @@ const CategoryMenu = () => {
         const encodedCategory = selectedCategory && selectedCategory !== "All"
           ? `?category=${encodeURIComponent(selectedCategory)}`
           : "";
-        const url = `https://restaurant-management-system-mern-stack.onrender.com//api/food-items/category${encodedCategory}`;
+        const url = `https://restaurant-management-system-mern-stack.onrender.com/api/food-items/category${encodedCategory}`;
         const response = await axios.get(url);
 
         if (response.data.error) {
@@ -105,7 +105,7 @@ const CategoryMenu = () => {
 
 
     axios
-      .post("https://restaurant-management-system-mern-stack.onrender.com//api/cart/add-to-cart", cartData, {
+      .post("https://restaurant-management-system-mern-stack.onrender.com/api/cart/add-to-cart", cartData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })

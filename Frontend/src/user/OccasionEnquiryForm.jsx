@@ -34,7 +34,7 @@ const EventBook = () => {
     const data = { ...formData, user_id: user._id };
     setIsLoading(true);
     try {
-      const res = await axios.post("https://restaurant-management-system-mern-stack.onrender.com//api/booking/occasion", data);
+      const res = await axios.post("https://restaurant-management-system-mern-stack.onrender.com/api/booking/occasion", data);
       if (res.data.status === "success") {
         setIsSuccess(true);
         setMessage(res.data.message);

@@ -52,7 +52,7 @@ const ContactForm = () => {
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       const res = await fetch(
-        "https://restaurant-management-system-mern-stack.onrender.com//api/contact-form/contact",
+        "https://restaurant-management-system-mern-stack.onrender.com/api/contact-form/contact",
         {
           method: "POST",
           headers: {

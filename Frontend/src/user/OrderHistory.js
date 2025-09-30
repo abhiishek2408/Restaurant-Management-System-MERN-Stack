@@ -27,7 +27,7 @@ const OrderHistory = () => {
   useEffect(() => {
     if (!effectiveUser || !effectiveUser._id) return;
 
-    fetch('https://restaurant-management-system-mern-stack.onrender.com//api/orders/order-history', {
+    fetch('https://restaurant-management-system-mern-stack.onrender.com/api/orders/order-history', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

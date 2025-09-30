@@ -21,7 +21,7 @@ const AvailableSlots = ({ slots, partySize }) => {
         tableIds: [selectedSlot.tableId],
         duration: (new Date(selectedSlot.endTime) - new Date(selectedSlot.startTime)) / 60000
       };
-      const res = await axios.post("https://restaurant-management-system-mern-stack.onrender.com//api/v1/reservations", payload);
+      const res = await axios.post("https://restaurant-management-system-mern-stack.onrender.com/api/v1/reservations", payload);
       setBookingMessage("Booking Confirmed! 🎉");
     } catch (err) {
       console.error(err);

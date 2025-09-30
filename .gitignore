@@ -15,12 +15,7 @@ Frontend/src/image/*.avif
 Frontend/src/image/*.jpeg
 Frontend/src/image/*.gif
 
-# PHP / Composer
-backend/vendor/
-backend/vendor/composer/
-backend/vendor/autoload.php
-backend/vendor/**/LICENSE
-backend/vendor/**/README.md
+
 
 # Python / Backend (if any)
 __pycache__/
@@ -33,11 +28,6 @@ __pycache__/
 Thumbs.db
 
 # Logs & Misc
-*.log
-*.csv
-*.json
-*.lock
-*.bak
 
 # Git LFS suggestion for large files
 # You can track large files (like huge CSVs or JSONs) using Git LFS

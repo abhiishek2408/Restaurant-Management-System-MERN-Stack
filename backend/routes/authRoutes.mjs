@@ -12,8 +12,7 @@ const upload = multer({ dest: "uploads/" });
 
 router.post("/register", upload.single("profileImg"), async (req, res) => {
   try {
-    const { username, email, password, confirmPassword, phone, address, bio } =
-      req.body;
+    const { username, email, password, confirmPassword, phone, address, bio } = req.body;
 
     if (password !== confirmPassword)
       return res
@@ -21,6 +20,7 @@ router.post("/register", upload.single("profileImg"), async (req, res) => {
         .json({ success: false, error: "Passwords do not match" });
 
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+    
     if (existingUser)
       return res
         .status(400)

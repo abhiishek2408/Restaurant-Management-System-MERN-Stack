@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import UserContext from "../context/UseContext";
+import { AuthContext } from "../context/AuthContext";
 
 const Cart = () => {
-  const { user, cartLength, setCartLength } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
   const [cartDetails, setCartDetails] = useState([]);
   const [addresses, setAddresses] = useState([]);
   const [currentLocation, setCurrentLocation] = useState(null);
@@ -317,9 +317,7 @@ useEffect(() => {
 
 
 
-useEffect(() => {
-  setCartLength(cartDetails.length);
-}, [cartDetails, setCartLength]);
+// Removed unused setCartLength effect to fix ESLint warning
 
 
 

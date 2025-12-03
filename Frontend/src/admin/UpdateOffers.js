@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { PlusCircle, Edit, Trash2 } from "lucide-react";
 import './UpdateOffers.css';
@@ -28,11 +28,7 @@ const UpdateOffers = () => {
   });
 
 // eslint-disable-next-line
-  useEffect(() => {
-    fetchOffers();
-  }, []);
-
-  const fetchOffers = async () => {
+  const fetchOffers = useCallback(async () => {
     try {
       const res = await axios.get("http://localhost/onlinerestro/backend/get_offers.php");
       setOffers(res.data.offers || []);
@@ -42,7 +38,11 @@ const UpdateOffers = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchOffers();
+  }, [fetchOffers]);
 
   const showTemporaryMessage = (msg, type) => {
     setMessage(msg);
@@ -60,17 +60,19 @@ const UpdateOffers = () => {
       [name]: type === "checkbox" ? (checked ? 1 : 0) : value,
     }));
   };
-
+  
+  // Handle image file input
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setNewOffer((prev) => ({ ...prev, product_image: reader.result }));
-    };
-    reader.readAsDataURL(file);
+    if (file) {
+      // For preview or upload, you might want to use URL.createObjectURL(file) or upload to server
+      setNewOffer((prev) => ({
+        ...prev,
+        product_image: file.name // or file if you want to upload the file object
+      }));
+    }
   };
+// Removed duplicate fetchOffers and useEffect
 
   const handleAddOrUpdateOffer = async () => {
     const { name, price, product_image } = newOffer;
@@ -150,15 +152,9 @@ const UpdateOffers = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="admin-offers-dashboard">
-
-
-
       {message && <div className={`message-display ${messageType}`}>{message}</div>}
-
-      
       <h2 style={{ color: '#d63384', marginBottom: '20px', textAlign:'center' }}>Offers</h2>
       <button
         className="flex items-center gap-2 px-4 py-2 ml-12 bg-pink-400 text-white font-semibold rounded-lg shadow-md hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 transition duration-200 ease-in-out"
@@ -266,6 +262,7 @@ const UpdateOffers = () => {
               </label>
               <input type="file" accept="image/*" onChange={handleImageChange} style={{ flex: '1', marginBottom: '0' }} />
             </div>
+
 
             <div className="modal-buttons">
               <button className="btn-add" onClick={handleAddOrUpdateOffer}>

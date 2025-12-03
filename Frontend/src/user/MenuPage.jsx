@@ -97,12 +97,14 @@ const MenuPage = () => {
     (price * quantity).toFixed(2);
 
   return (
-    <div className="max-w-6xl mx-auto py-6">
-      <h1 className="text-2xl font-bold mb-6 capitalize">{category} Menu</h1>
+    <div className="max-w-6xl mx-auto py-8">
+      <h1 className="text-3xl font-extrabold mb-8 capitalize text-center text-pink-700 tracking-wide drop-shadow-sm">
+        {category} Menu
+      </h1>
 
       {/* Loading Skeleton */}
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {Array(6)
             .fill(0)
             .map((_, i) => (
@@ -111,7 +113,7 @@ const MenuPage = () => {
         </div>
       ) : (
         // Cards
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((item, idx) => {
             const isNew =
               item.is_new === true || item.is_new === 1 || item.is_new === "1";
@@ -123,50 +125,53 @@ const MenuPage = () => {
             return (
               <div
                 key={idx}
-                className="bg-white rounded-lg border overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-300"
+                className="bg-gradient-to-br from-pink-100 via-white to-purple-100 rounded-3xl border-2 border-pink-300 overflow-hidden cursor-pointer shadow-xl hover:scale-105 hover:shadow-pink-300/60 transition-all duration-300 group relative ring-1 ring-pink-100"
                 onClick={() => openModal(item)}
               >
                 {item.product_image && (
-                  <img
-                    src={`data:image/jpeg;base64,${item.product_image}`}
-                    alt={item.name}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
-                <div className="p-4">
-                  <h2 className="text-lg font-bold flex items-center gap-2">
-                    {item.name}
+                  <div className="relative">
+                    <img
+                      src={`data:image/jpeg;base64,${item.product_image}`}
+                      alt={item.name}
+                      className="w-full h-56 object-cover group-hover:brightness-95 transition duration-200 rounded-t-3xl"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-pink-200/30 via-transparent to-transparent pointer-events-none rounded-t-3xl"></div>
                     {isNew && (
-                      <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded">
+                      <span className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full shadow font-bold tracking-wide drop-shadow-lg">
                         New
                       </span>
                     )}
                     {isSpecialOffer && (
-                      <span className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded">
+                      <span className="absolute top-3 right-3 bg-pink-600 text-white text-xs px-3 py-1 rounded-full shadow font-bold tracking-wide animate-pulse drop-shadow-lg">
                         Special Offer
                       </span>
                     )}
+                  </div>
+                )}
+                <div className="p-6 flex flex-col gap-2">
+                  <h2 className="text-2xl font-extrabold flex items-center gap-2 text-gray-900 group-hover:text-pink-700 transition tracking-tight">
+                    <span className="inline-block text-pink-400">🍽️</span> {item.name}
                   </h2>
 
                   {/* Price & Discount */}
                   {item.discount_price ? (
-                    <p className="text-green-600 font-semibold">
+                    <p className="text-pink-700 font-extrabold text-lg">
                       ₹{item.discount_price}{" "}
-                      <span className="line-through text-gray-400 ml-2">
+                      <span className="line-through text-gray-400 ml-2 text-base font-semibold">
                         ₹{item.price}
                       </span>
                     </p>
                   ) : (
-                    <p className="text-gray-700">₹{item.price}</p>
+                    <p className="text-gray-700 font-bold text-lg">₹{item.price}</p>
                   )}
 
                   {/* Extra Info */}
-                  <div className="mt-2 text-sm text-gray-500 flex flex-wrap gap-3">
-                    {item.vegan ? <span>🥦 Vegan</span> : null}
-                    {item.rating ? <span>⭐ {item.rating}</span> : null}
+                  <div className="mt-1 text-xs text-gray-500 flex flex-wrap gap-2">
+                    {item.vegan ? <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full font-semibold">🥦 Vegan</span> : null}
+                    {item.rating ? <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-semibold">⭐ {item.rating}</span> : null}
                   </div>
 
-                  <p className="text-sm text-gray-500 mt-2 line-clamp-2">
+                  <p className="text-sm text-gray-700 mt-2 line-clamp-2 min-h-[40px] italic">
                     {item.description}
                   </p>
                 </div>
@@ -179,9 +184,7 @@ const MenuPage = () => {
       {/* Modal */}
       {modalData && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center p-6 z-50 overflow-auto">
-          <div className="bg-gradient-to-br from-pink-50 to-purple-50 max-w-4xl w-full p-10 relative shadow-lg border border-pink-300">
-            {/* Removed border-radius on modal container */}
-
+          <div className="bg-gradient-to-br from-pink-100 via-white to-purple-100 max-w-4xl w-full p-10 relative shadow-2xl border-2 border-pink-400 rounded-3xl animate-fadeIn ring-2 ring-pink-100">
             <button
               onClick={() => setModalData(null)}
               className="absolute top-6 right-7 text-4xl font-extrabold text-pink-600 hover:text-pink-800 transition-colors duration-300"
@@ -194,21 +197,22 @@ const MenuPage = () => {
               <SkeletonModalContent />
             ) : (
               <div className="flex flex-col md:flex-row gap-12">
-                <img
-                  src={`data:image/jpeg;base64,${modalData.product_image}`}
-                  alt={modalData.name}
-                  className="w-full md:w-1/3 object-cover shadow-inner border border-pink-300 rounded-lg"
-                />
+                <div className="relative w-full md:w-1/3 flex items-center justify-center">
+                  <img
+                    src={`data:image/jpeg;base64,${modalData.product_image}`}
+                    alt={modalData.name}
+                    className="w-full object-cover shadow-inner border-2 border-pink-300 rounded-2xl max-h-80"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-pink-200/30 via-transparent to-transparent pointer-events-none rounded-2xl"></div>
+                </div>
                 <div className="md:w-2/3 flex flex-col">
-                  {/* Name - normal font weight */}
-                  <h2 className="text-4xl text-pink-700 font-normal mb-4">
-                    {modalData.name}
+                  <h2 className="text-4xl text-pink-700 font-extrabold mb-4 tracking-tight flex items-center gap-2">
+                    <span className="inline-block text-pink-400">🍽️</span> {modalData.name}
                   </h2>
 
-                  <p className="mb-3 text-gray-700">{modalData.description}</p>
+                  <p className="mb-3 text-gray-700 text-lg">{modalData.description}</p>
 
-                  {/* Price - normal font weight and smaller size */}
-                  <p className="text-pink-600 font-normal mb-3 text-2xl">
+                  <p className="text-pink-600 font-bold mb-3 text-2xl">
                     {modalData.discount_price ? (
                       <>
                         ₹{modalData.discount_price}{" "}
@@ -223,25 +227,24 @@ const MenuPage = () => {
 
                   <div className="text-sm text-gray-600 mb-6 flex flex-wrap gap-2">
                     {modalData.vegan ? (
-                      <span className="inline-block bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-semibold">
+                      <span className="inline-block bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">
                         🥦 Vegan
                       </span>
                     ) : null}
                     {modalData.rating ? (
-                      <span className="inline-block bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-semibold">
+                      <span className="inline-block bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-semibold">
                         ⭐ {modalData.rating}
                       </span>
                     ) : null}
                     {(modalData.isOffer === true ||
                     modalData.isOffer === 1 ||
                     modalData.isOffer === "1") && (
-                      <span className="inline-block bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-semibold">
+                      <span className="inline-block bg-pink-600 text-white px-2 py-1 rounded-full text-xs font-semibold animate-pulse">
                         Special Offer
                       </span>
                     )}
                   </div>
 
-                  {/* Quantity */}
                   <label className="block mb-8 font-semibold text-lg">
                     Quantity:
                     <input
@@ -251,15 +254,15 @@ const MenuPage = () => {
                       onChange={(e) =>
                         setQuantity(Math.max(1, parseInt(e.target.value) || 1))
                       }
-                      className="ml-4 w-24 px-4 py-2 border border-pink-300 rounded-2xl"
+                      className="ml-4 w-24 px-4 py-2 border-2 border-pink-300 rounded-2xl"
                     />
                   </label>
 
                   <button
                     onClick={addToCart}
-                    className="mt-auto bg-pink-600 hover:bg-pink-700 text-white px-10 py-3 rounded-full font-bold transition-colors duration-300"
+                    className="mt-auto bg-gradient-to-r from-pink-500 via-pink-600 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-12 py-3 rounded-full font-extrabold text-lg shadow-xl transition-all duration-300 tracking-wide border-2 border-pink-300 hover:scale-105"
                   >
-                    Add to Cart | ₹
+                    <span className="mr-2">🛒</span> Add to Cart | ₹
                     {updateTotalPrice(
                       modalData.discount_price || modalData.price,
                       quantity

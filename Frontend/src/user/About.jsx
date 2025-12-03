@@ -104,14 +104,14 @@ function About() {
   return (
     <section
       id="about"
-      className="min-h-screen bg-white text-gray-800 font-lato pt-6 px-6 md:pt-8 md:px-12 lg:pt-12 lg:px-24"
+      className="min-h-screen bg-white text-gray-800 font-lato pt-2 px-4 md:pt-4 md:px-10 lg:pt-6 lg:px-20"
     >
       <div className="container mx-auto">
         {/* Main hero section with image and text */}
         <div
           ref={introRef}
-          className="bg-white rounded-3xl shadow-xl overflow-hidden transition-all duration-1000 ease-in-out transform opacity-0 translate-y-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-8 md:p-12">
+          className="bg-white rounded-2xl border-2 border-pink-200 overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center p-6 md:p-10">
             {/* Image section */}
             <div className="order-2 lg:order-1">
               {isLoading ? (
@@ -120,14 +120,14 @@ function About() {
                 <img
                   src="https://www.franciscosegarra.com/wp-content/uploads/2022/03/restaurant-decoration.jpg"
                   alt="A cozy, elegantly set bistro interior"
-                  className="w-full h-96 object-cover rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-500"
+                  className="w-full h-[420px] object-cover rounded-xl border border-pink-100"
                 />
               )}
             </div>
 
             {/* Text content section */}
             <div className="order-1 lg:order-2 text-center lg:text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-pink-600 mb-4 tracking-tight leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-pink-700 mb-4 tracking-tight leading-tight">
                 {isLoading ? (
                   <SkeletonLoader className="h-10 w-full mb-4" />
                 ) : (
@@ -153,12 +153,12 @@ function About() {
         </div>
 
 
-        <div ref={philosophyRef} className="mt-16 text-center transition-all duration-1000 ease-in-out transform opacity-0 translate-y-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12">Our Philosophy</h2>
+        <div ref={philosophyRef} className="mt-10 text-center">
+          <h2 className="text-3xl font-bold text-pink-700 mb-8">Our Philosophy</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Mission Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-md transform hover:scale-105 transition-transform duration-300">
+            <div className="bg-white p-6 rounded-xl border-2 border-pink-200">
               {isLoading ? (
                 <>
                   <SkeletonLoader className="h-12 w-12 mx-auto mb-4" />
@@ -179,7 +179,7 @@ function About() {
             </div>
 
             {/* Vision Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-md transform hover:scale-105 transition-transform duration-300">
+            <div className="bg-white p-6 rounded-xl border-2 border-pink-200">
               {isLoading ? (
                 <>
                   <SkeletonLoader className="h-12 w-12 mx-auto mb-4" />
@@ -200,7 +200,7 @@ function About() {
             </div>
 
             {/* Commitment Card */}
-            <div className="bg-white p-8 rounded-2xl shadow-md transform hover:scale-105 transition-transform duration-300">
+            <div className="bg-white p-6 rounded-xl border-2 border-pink-200">
               {isLoading ? (
                 <>
                   <SkeletonLoader className="h-12 w-12 mx-auto mb-4" />
@@ -225,12 +225,12 @@ function About() {
         {/* Locations section */}
         <div
           ref={locationsRef}
-          className="mt-16 text-center transition-all duration-1000 ease-in-out transform opacity-0 translate-y-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12">Our Locations</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          className="mt-10 text-center">
+          <h2 className="text-3xl font-bold text-pink-700 mb-8">Our Locations</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
               [...Array(3)].map((_, index) => (
-                <div key={index} className="bg-white p-8 rounded-2xl shadow-md">
+                <div key={index} className="bg-white p-6 rounded-xl border-2 border-pink-200">
                   <SkeletonLoader className="h-12 w-12 mx-auto mb-4" />
                   <SkeletonLoader className="h-6 w-3/4 mx-auto mb-2" />
                   <SkeletonLoader count={2} className="h-4 w-full mb-2" />
@@ -238,7 +238,7 @@ function About() {
               ))
             ) : (
               data.locations.map((location) => (
-                <div key={location.id} className="bg-white p-8 rounded-2xl shadow-md transform hover:scale-105 transition-transform duration-300">
+                <div key={location.id} className="bg-white p-6 rounded-xl border-2 border-pink-200">
                   <div className="flex items-center justify-center text-pink-600 mb-4">
                     <MapPin size={48} />
                   </div>
@@ -254,7 +254,7 @@ function About() {
         {/* Closing section with call-to-action buttons */}
         <div
           ref={closingRef}
-          className="mt-16 text-center transition-all duration-1000 ease-in-out transform opacity-0 translate-y-12">
+          className="mt-10 text-center">
           {isLoading ? (
             <>
               <SkeletonLoader className="h-6 w-2/3 mx-auto mb-8" />
@@ -266,21 +266,10 @@ function About() {
             </>
           ) : (
             <>
-              <p className="text-lg text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 leading-relaxed mb-6 max-w-2xl mx-auto">
                 Come experience the art of dining at Bistrofy — where every meal is crafted with care and served with a smile. We look forward to welcoming you at one of our locations or delivering to your door.
               </p>
-              <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <button
-                  onClick={() => setIsMenuOpen(true)}
-                  className="bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-700 transition-colors duration-300 transform hover:scale-105">
-                  Show Menu
-                </button>
-                <button
-                  onClick={() => setIsDeliveryModalOpen(true)}
-                  className="bg-pink-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-pink-700 transition-colors duration-300 transform hover:scale-105">
-                  Order Now
-                </button>
-              </div>
+              {/* Removed Show Menu and Order Now buttons as requested */}
             </>
           )}
         </div>

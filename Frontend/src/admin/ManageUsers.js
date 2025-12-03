@@ -4,7 +4,7 @@ export default function MenuManagement() {
   const [menuSections, setMenuSections] = useState([]);
   const [editData, setEditData] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
 
   useEffect(() => {
     fetchMenuSections(currentPage);

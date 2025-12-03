@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation, Outlet } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
 
 const AdminDashboard = () => {
-  const location = useLocation();
-  const [user] = useState(location.state?.user || JSON.parse(localStorage.getItem("user")));
+  // Removed unused variable 'location' to fix ESLint warning
+    // Removed unused variable 'user' to fix ESLint warning
 
   return (
     <div className="font-sans bg-white min-h-screen">

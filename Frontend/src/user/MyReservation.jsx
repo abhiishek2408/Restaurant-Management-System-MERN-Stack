@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import API from "./api";
 import UserContext from "../context/UseContext";
 
@@ -71,7 +71,7 @@ const MyReservations = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchReservations = async () => {
+  const fetchReservations = useCallback(async () => {
     console.log("User:", user);
     console.log("Token:", token);
 
@@ -94,7 +94,7 @@ const MyReservations = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, token]);
 
   // --- 🆕 Timer Effect ---
   useEffect(() => {
@@ -122,9 +122,9 @@ const MyReservations = () => {
     return () => clearInterval(interval);
   }, [reservations]);
 
-  useEffect(() => {
-    fetchReservations();
-  }, [user, token]);
+    useEffect(() => {
+      fetchReservations();
+    }, [fetchReservations]);
 
   const handleCancel = async (id, startTime) => {
     const diffHours = (new Date(startTime) - new Date()) / (1000 * 60 * 60);

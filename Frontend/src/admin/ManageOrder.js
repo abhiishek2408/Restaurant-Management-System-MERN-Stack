@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { PlusCircle, Edit, Trash2 } from "lucide-react";
+import { Edit } from "lucide-react";
 import UserContext from "../context/UseContext";
 
 const ManageOrder = () => {

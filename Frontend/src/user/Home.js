@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <div className="max-w-7xl mx-auto py-10 px-5 sm:px-10">
       {/* Banner */}
-      <div className="bg-gradient-to-br from-pink-400 via-pink-300 to-pink-200 text-white p-4 sm:p-8 rounded-3xl shadow-2xl backdrop-blur-sm flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-8 md:gap-0">
+      <div className="bg-gradient-to-br from-pink-400 via-pink-300 to-pink-200 text-white p-4 sm:p-8 rounded-3xl backdrop-blur-sm flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-8 md:gap-0">
         {/* Left Text */}
         <div className="max-w-lg space-y-2 sm:space-y-4 text-center md:text-left">
           <h1 className="text-3xl sm:text-6xl font-extrabold tracking-tight drop-shadow-lg">
@@ -75,9 +75,13 @@ const Home = () => {
         </div>
       </div>
 
+
       {/* Categories Grid */}
       <section className="mt-14">
-        <h2 className="text-3xl font-semibold mb-6 text-gray-800">Explore Categories</h2>
+        <h2 className="text-4xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 tracking-tight text-left">
+          Explore Categories
+          <span className="block mt-2 w-16 h-1 rounded-full bg-gradient-to-r from-pink-400 via-fuchsia-400 to-yellow-300 opacity-80"></span>
+        </h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-6">
           {loading
             ? Array(8)
@@ -87,7 +91,7 @@ const Home = () => {
                 <button
                   key={idx}
                   onClick={() => navigate(`/user/menu/${item.menu}`)}
-                  className="flex flex-col items-center justify-center space-y-2 p-3 rounded-xl shadow-md border border-transparent hover:border-pink-400 hover:shadow-lg transition duration-300 focus:outline-none focus:ring-4 focus:ring-pink-300"
+                  className="flex flex-col items-center justify-center space-y-2 p-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
                   type="button"
                 >
                   <img
@@ -96,7 +100,7 @@ const Home = () => {
                     className="w-16 h-16 object-contain rounded-lg"
                     loading="lazy"
                   />
-                  <span className="text-sm font-light text-gray-700">{item.label}</span>
+                  <span className="text-sm font-normal text-gray-700">{item.label}</span>
                 </button>
               ))}
         </div>

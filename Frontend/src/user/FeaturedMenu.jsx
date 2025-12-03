@@ -126,13 +126,13 @@ function FoodItemsByLocation() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+      <h2 className="text-3xl font-extrabold mb-4 mt-0 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 tracking-tight text-left">
         Find Food Items by Location
+        <span className="block mt-2 w-20 h-1 rounded-full bg-gradient-to-r from-pink-400 via-fuchsia-400 to-yellow-300 opacity-80"></span>
       </h2>
 
-      <h3 className="text-xl font-medium mb-6 text-gray-700">
-        Location:{" "}
-        <span className="font-normal text-gray-500">{displayLocation}</span>
+      <h3 className="text-base font-normal mb-6 text-gray-500">
+        Location: <span className="font-normal text-gray-400">{displayLocation}</span>
       </h3>
 
       {loading && (
@@ -158,7 +158,7 @@ function FoodItemsByLocation() {
             return (
               <div
                 key={item._id}
-                className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col cursor-pointer"
+                className="bg-gradient-to-br from-pink-50 via-white to-yellow-50 rounded-2xl border-2 border-pink-100 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 flex flex-col cursor-pointer group"
                 onClick={() => {
                   setModalData(item);
                   setQuantity(1);
@@ -168,26 +168,30 @@ function FoodItemsByLocation() {
                   <img
                     src={`data:image/jpeg;base64,${item.product_image}`}
                     alt={item.name}
-                    className="h-48 w-full object-cover rounded-t-lg"
+                    className="h-48 w-full object-cover rounded-t-2xl group-hover:brightness-95 transition duration-200"
                   />
                 ) : (
-                  <div className="h-48 w-full bg-gray-200 flex items-center justify-center rounded-t-lg text-gray-400">
+                  <div className="h-48 w-full bg-gray-200 flex items-center justify-center rounded-t-2xl text-gray-400">
                     No Image
                   </div>
                 )}
 
-                <div className="p-4 flex flex-col flex-grow">
-                  <h3 className="text-lg font-semibold mb-2 text-gray-900">
+                <div className="p-5 flex flex-col flex-grow">
+                  <h3 className="text-lg font-semibold mb-2 text-gray-900 flex items-center gap-2">
                     {item.name}
                     {isNew && <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded ml-2">New</span>}
                     {isSpecialOffer && <span className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded ml-2">Special Offer</span>}
                   </h3>
                   <p className="text-sm text-gray-500 mt-2 line-clamp-2">{item.description}</p>
-                  <div className="mt-2 text-sm text-gray-500 flex flex-wrap gap-3">
-                    {item.vegan ? <span>🥦 Vegan</span> : null}
-                    {item.rating ? <span>⭐ {item.rating}</span> : null}
+                  <div className="mt-2 text-sm text-gray-500 flex flex-wrap gap-3 items-center justify-between">
+                    {item.vegan ? (
+                      <span><i className="fa fa-leaf text-green-500 mr-1" aria-hidden="true"></i>Vegan</span>
+                    ) : null}
+                    {item.rating ? (
+                      <span><i className="fa fa-star text-yellow-400 mr-1" aria-hidden="true"></i>{item.rating}</span>
+                    ) : null}
+                    <span className="text-pink-600 font-semibold text-base ml-auto">₹{item.price}</span>
                   </div>
-                  <p className="mt-4 text-pink-600 font-semibold text-lg">₹{item.price}</p>
                 </div>
               </div>
             );
@@ -228,17 +232,17 @@ function FoodItemsByLocation() {
                 <div className="text-sm text-gray-600 mt-3 mb-4 flex flex-wrap gap-2 items-center">
                   {modalData.vegan && (
                     <span className="inline-block bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-semibold select-none">
-                      🥦 Vegan
+                      <i className="fa fa-leaf text-green-500 mr-1" aria-hidden="true"></i>Vegan
                     </span>
                   )}
                   {modalData.rating && (
                     <span className="inline-block bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold select-none">
-                      ⭐ {modalData.rating}
+                      <i className="fa fa-star text-yellow-400 mr-1" aria-hidden="true"></i>{modalData.rating}
                     </span>
                   )}
                   {(modalData.isOffer === true || modalData.isOffer === 1 || modalData.isOffer === "1") && (
                     <span className="inline-block bg-red-50 text-red-700 px-3 py-1 rounded-full text-xs font-semibold select-none">
-                      🔥 Special Offer
+                      <i className="fa fa-fire text-red-500 mr-1" aria-hidden="true"></i>Special Offer
                     </span>
                   )}
                 </div>

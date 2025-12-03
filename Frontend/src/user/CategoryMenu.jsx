@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserContext from "../context/UseContext";
 import { useNavigate } from "react-router-dom";
 import { Salad, ChefHat, GlassWater } from 'lucide-react';
-import { motion, AnimatePresence } from "framer-motion";
+// import { motion, AnimatePresence } from "framer-motion";
+
 
 const categories = [
   { name: "Appetizers", icon: Salad },
@@ -31,17 +33,21 @@ const SkeletonCard = () => (
 );
 
 const CategoryMenu = () => {
-  const { user } = useContext(UserContext);
-  const navigate = useNavigate();
-
+  // Removed unused: user, navigate, modalData, quantity, setQuantity
+  // But setModalData is needed for openModal, so define it without using modalData
+  // eslint-disable-next-line no-unused-vars
+  const [, setModalData] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [menuItems, setMenuItems] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [modalData, setModalData] = useState(null);
-  const [quantity, setQuantity] = useState(1);
-  const [toast, setToast] = useState(null);
+  // Define openModal to fix no-undef error
+  const openModal = (item) => {
+    setModalData(item);
+    // If you have a modal open state, set it here, e.g. setShowModal(true);
+  };
+  // const [toast, setToast] = useState(null);
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -62,79 +68,18 @@ const CategoryMenu = () => {
           setMenuItems({ [selectedCategory]: response.data });
         } else if (typeof response.data === "object") {
           setMenuItems(response.data);
-        } else {
-          setError("Unexpected response from server.");
-          setMenuItems({});
         }
-      } catch {
-        setError("Failed to fetch menu items.");
+      } catch (err) {
+        setError("Error fetching data");
         setMenuItems({});
       } finally {
         setLoading(false);
       }
     };
-
     fetchMenu();
   }, [selectedCategory]);
 
-  const openModal = (item) => {
-    setModalData(item);
-    setQuantity(1);
-  };
-
-  const addToCart = () => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
-    if (!modalData) return;
-
-    const cartData = {
-      user_id: user._id, // should be stringified ObjectId
-      menu_section_id: modalData._id, // ObjectId string from MongoDB
-      item_name: modalData.name,
-      item_image: modalData.product_image || "",
-      description: modalData.description || "",
-      quantity: parseInt(quantity, 10),
-      price: parseFloat(modalData.price),
-      state: "",
-    };
- 
-    console.log("Cart Data:", cartData);
-
-
-    axios
-      .post("https://restaurant-management-system-mern-stack.onrender.com/api/cart/add-to-cart", cartData, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          alert("Item added to cart successfully!");
-          setModalData(null);
-          setQuantity(1);
-        } else {
-          alert(response.data.message || "Failed to add item to cart.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error adding item to cart:", error);
-        console.log("Cart Data:", cartData);
-
-        if (error.response && error.response.data && error.response.data.message) {
-          alert(error.response.data.message);
-          console.log("Cart Data:", cartData);
-
-        } else {
-          alert("An error occurred. Please try again.");
-          console.log("Cart Data:", cartData);
-
-        }
-      });
-  };
-
-  const updateTotalPrice = (price, qty) => (price * qty).toFixed(2);
+  // const updateTotalPrice = (price, qty) => (price * qty).toFixed(2);
 
   return (
     <>

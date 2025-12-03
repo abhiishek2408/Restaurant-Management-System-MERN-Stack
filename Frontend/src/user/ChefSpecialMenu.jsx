@@ -128,13 +128,13 @@ function ChefSpecialMenu() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800">
+      <h2 className="text-3xl font-extrabold mb-4 mt-0 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 tracking-tight text-left">
         Chef's Special Menu
+        <span className="block mt-2 w-20 h-1 rounded-full bg-gradient-to-r from-pink-400 via-fuchsia-400 to-yellow-300 opacity-80"></span>
       </h2>
 
-      <h3 className="text-xl font-medium mb-6 text-gray-700">
-        Location:{" "}
-        <span className="font-normal text-gray-500">{displayLocation}</span>
+      <h3 className="text-base font-normal mb-6 text-gray-500">
+        Location: <span className="font-normal text-gray-400">{displayLocation}</span>
       </h3>
      
       {/* Show skeleton loader while loading */}
@@ -199,14 +199,15 @@ function ChefSpecialMenu() {
                   </h3>
                   <p className="text-sm text-gray-500 mt-2 line-clamp-2">{item.description}</p>
 
-                  <div className="mt-2 text-sm text-gray-500 flex flex-wrap gap-3">
-                    {item.vegan ? <span>🥦 Vegan</span> : null}
-                    {item.rating ? <span>⭐ {item.rating}</span> : null}
+                  <div className="mt-2 text-sm text-gray-500 flex flex-wrap gap-3 items-center justify-between">
+                    {item.vegan ? (
+                      <span><i className="fa fa-leaf text-green-500 mr-1" aria-hidden="true"></i>Vegan</span>
+                    ) : null}
+                    {item.rating ? (
+                      <span><i className="fa fa-star text-yellow-400 mr-1" aria-hidden="true"></i>{item.rating}</span>
+                    ) : null}
+                    <span className="text-pink-600 font-semibold text-base ml-auto">₹{item.price}</span>
                   </div>
-
-                  <p className="mt-4 text-pink-600 font-semibold text-lg">
-                    ₹{item.price}
-                  </p>
                 </div>
               </div>
             );
@@ -250,17 +251,17 @@ function ChefSpecialMenu() {
                 <div className="text-sm text-gray-600 mt-3 mb-4 flex flex-wrap gap-2 items-center">
                   {modalData.vegan && (
                     <span className="inline-block bg-green-50 text-green-700 px-3 py-1 rounded-full text-xs font-semibold select-none">
-                      🥦 Vegan
+                      <i className="fa fa-leaf text-green-500 mr-1" aria-hidden="true"></i>Vegan
                     </span>
                   )}
                   {modalData.rating && (
                     <span className="inline-block bg-yellow-50 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold select-none">
-                      ⭐ {modalData.rating}
+                      <i className="fa fa-star text-yellow-400 mr-1" aria-hidden="true"></i>{modalData.rating}
                     </span>
                   )}
                   {(modalData.isOffer === true || modalData.isOffer === 1 || modalData.isOffer === "1") && (
                     <span className="inline-block bg-red-50 text-red-700 px-3 py-1 rounded-full text-xs font-semibold select-none">
-                      🔥 Special Offer
+                      <i className="fa fa-fire text-red-500 mr-1" aria-hidden="true"></i>Special Offer
                     </span>
                   )}
                 </div>

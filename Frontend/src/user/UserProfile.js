@@ -1,13 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../context/UseContext";
 import { useNavigate } from "react-router-dom";
-import { Mail, Phone, MapPin, Pencil, Save, LogOut, Home } from "lucide-react";
+import { Mail, Phone, MapPin, LogOut, Home, Pencil, Save, X, Star, Heart, MessageCircle } from "lucide-react";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const [isEditing, setIsEditing] = useState(false);
+  // Removed isEditing and setIsEditing (unused)
+  const [showModal, setShowModal] = useState(false);
   const [editableData, setEditableData] = useState({
     email: "",
     phone: "",
@@ -30,8 +31,23 @@ const Profile = () => {
     navigate("/login");
   };
 
+  const handleEdit = () => {
+    setShowModal(true);
+  };
+
   const handleSave = () => {
-    setIsEditing(false);
+    setShowModal(false);
+    // Here you would send updated data to backend if needed
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+    // Optionally reset editableData to user data
+    setEditableData({
+      email: user.email || "",
+      phone: user.phone || "",
+      address: user.address || "",
+    });
   };
 
   if (!user) {
@@ -43,127 +59,164 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 flex justify-center items-center pt-4 pb-2 px-6 sm:pt-2 sm:pb-4 sm:px-12 font-sans">
-      <div className="w-full max-w-5xl bg-white rounded-3xl overflow-hidden flex flex-col md:flex-row shadow-lg">
-        {/* Left Section */}
-        <div className="bg-pink-600 text-white p-8 lg:p-12 flex flex-col items-center text-center flex-shrink-0 md:w-1/3">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-yellow-50 to-purple-100 flex flex-row items-start px-0 pt-2">
+      {/* Sidebar */}
+      <aside className="h-full min-h-screen w-64 bg-gradient-to-b from-pink-100 via-yellow-50 to-purple-100 backdrop-blur-lg border-r-2 border-pink-200 flex flex-col items-center pt-4 px-4 sticky top-0 z-20 shadow-xl">
+        <div className="flex flex-col items-center mb-8 mt-0">
           <img
-            src={
-              user.profile_img ||
-              "https://cdn.vectorstock.com/i/500p/96/75/gray-scale-male-character-profile-picture-vector-51589675.jpg"
-            }
+            src={user.profile_img || "https://cdn.vectorstock.com/i/500p/96/75/gray-scale-male-character-profile-picture-vector-51589675.jpg"}
             alt="Profile"
-            className="w-32 h-32 rounded-full border-4 border-white object-cover mb-4"
+            className="w-24 h-24 rounded-full border-4 border-gradient-to-r from-pink-400 via-yellow-400 to-purple-400 object-cover shadow-xl mb-2"
           />
-          <h2 className="text-3xl font-extrabold mb-1">{user.username}</h2>
-          <p className="text-sm italic opacity-80">{user.bio || "I am a Software Developer"}</p>
+          <span className="text-lg font-bold text-pink-600 mt-1">{user.username}</span>
         </div>
-
-        {/* Right Section */}
-        <div className="bg-white p-8 lg:p-12 flex-grow">
-          <h3 className="text-3xl font-bold text-pink-600 mb-6">Profile Details</h3>
-
-          {/* Email */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center mb-4 space-y-2 sm:space-y-0">
-            <span className="flex items-center text-gray-600 font-semibold w-full sm:w-40">
-              <Mail size={20} className="mr-2 text-pink-500" />
-              Email:
-            </span>
-            {isEditing ? (
-              <input
-                type="email"
-                value={editableData.email}
-                onChange={(e) =>
-                  setEditableData({ ...editableData, email: e.target.value })
+        <nav className="flex flex-col gap-6 w-full">
+          <button onClick={() => navigate("/")} className="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
+            <Home size={20} className="text-gray-700" /> Home
+          </button>
+          <button onClick={() => navigate("/order-history")} className="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-pink-600 hover:bg-pink-50 transition-colors">
+            <Star size={20} className="text-yellow-500" /> Orders
+          </button>
+          <button onClick={handleEdit} className="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-yellow-500 hover:bg-yellow-50 transition-colors">
+            <Pencil size={20} className="text-pink-500" /> Edit Profile
+          </button>
+          <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-purple-500 hover:bg-purple-50 transition-colors">
+            <LogOut size={20} className="text-purple-500" /> Logout
+          </button>
+        </nav>
+      </aside>
+      {/* Main Profile Card */}
+      <main className="flex-1 flex justify-center items-start px-4">
+        <div className="w-full max-w-2xl bg-gradient-to-br from-white via-pink-50 to-purple-50 backdrop-blur-lg rounded-2xl p-6 flex flex-col items-center border border-gray-200 bg-clip-padding relative">
+          {/* SVG background */}
+          <svg className="absolute top-0 left-0 w-full h-full -z-10" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <ellipse cx="500" cy="100" rx="120" ry="60" fill="#fceabb" fillOpacity="0.25" />
+            <ellipse cx="100" cy="500" rx="140" ry="70" fill="#f8fafc" fillOpacity="0.35" />
+            <ellipse cx="300" cy="300" rx="180" ry="90" fill="#fbbf24" fillOpacity="0.10" />
+            <ellipse cx="400" cy="400" rx="80" ry="40" fill="#f472b6" fillOpacity="0.10" />
+          </svg>
+          <div className="flex flex-col items-center mb-6 z-10">
+            <div className="relative w-24 h-24 mb-1">
+              <img
+                src={
+                  user.profile_img ||
+                  "https://cdn.vectorstock.com/i/500p/96/75/gray-scale-male-character-profile-picture-vector-51589675.jpg"
                 }
-                className="flex-grow w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 transition-shadow"
+                alt="Profile"
+                className="w-24 h-24 rounded-full border-4 border-gradient-to-r from-pink-400 via-yellow-400 to-purple-400 object-cover shadow-xl transition-transform duration-300 hover:scale-105"
+                style={{ boxShadow: '0 8px 32px 0 rgba(244,114,182,0.15), 0 1.5px 8px 0 rgba(168,139,250,0.10)' }}
               />
-            ) : (
-              <span className="flex-grow text-gray-800">{editableData.email}</span>
-            )}
+              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-pink-400 via-yellow-400 to-purple-400 px-3 py-0.5 rounded-full text-white text-xs font-bold shadow-md">Premium</span>
+            </div>
+            <h1 className="text-2xl font-extrabold text-pink-700 mb-1 drop-shadow-lg tracking-tight flex items-center gap-2">
+              <Star size={20} className="text-yellow-400" /> {user.username}
+            </h1>
+            <p className="text-base text-gray-600 italic flex items-center gap-2">
+              <Heart size={16} className="text-pink-400" /> {user.bio || "Food lover & explorer"}
+            </p>
           </div>
-
-          {/* Phone */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center mb-4 space-y-2 sm:space-y-0">
-            <span className="flex items-center text-gray-600 font-semibold w-full sm:w-40">
-              <Phone size={20} className="mr-2 text-pink-500" />
-              Phone:
-            </span>
-            {isEditing ? (
-              <input
-                type="text"
-                value={editableData.phone}
-                onChange={(e) =>
-                  setEditableData({ ...editableData, phone: e.target.value })
-                }
-                className="flex-grow w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 transition-shadow"
-              />
-            ) : (
-              <span className="flex-grow text-gray-800">{editableData.phone}</span>
-            )}
+          {/* Profile Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mb-6 z-10">
+            <div className="flex flex-col items-center bg-gradient-to-br from-pink-100 via-white to-pink-50 rounded-lg p-4 border-2 border-pink-200 shadow-sm hover:shadow-lg transition-shadow duration-300">
+              <Star size={20} className="text-yellow-400 mb-1" />
+              <span className="text-xs text-gray-500">Orders</span>
+              <span className="text-lg font-bold text-pink-600">{user.ordersCount || 0}</span>
+            </div>
+            <div className="flex flex-col items-center bg-gradient-to-br from-yellow-100 via-white to-yellow-50 rounded-lg p-4 border-2 border-yellow-200 shadow-sm hover:shadow-lg transition-shadow duration-300">
+              <Heart size={20} className="text-pink-400 mb-1" />
+              <span className="text-xs text-gray-500">Favorites</span>
+              <span className="text-lg font-bold text-yellow-500">{user.favoritesCount || 0}</span>
+            </div>
+            <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-purple-50 rounded-lg p-4 border-2 border-purple-200 shadow-sm hover:shadow-lg transition-shadow duration-300">
+              <MessageCircle size={20} className="text-purple-400 mb-1" />
+              <span className="text-xs text-gray-500">Reviews</span>
+              <span className="text-lg font-bold text-purple-500">{user.reviewsCount || 0}</span>
+            </div>
           </div>
-
-          {/* Address */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center mb-4 space-y-2 sm:space-y-0">
-            <span className="flex items-center text-gray-600 font-semibold w-full sm:w-40">
-              <MapPin size={20} className="mr-2 text-pink-500" />
-              Address:
-            </span>
-            {isEditing ? (
-              <input
-                type="text"
-                value={editableData.address}
-                onChange={(e) =>
-                  setEditableData({ ...editableData, address: e.target.value })
-                }
-                className="flex-grow w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 transition-shadow"
-              />
-            ) : (
-              <span className="flex-grow text-gray-800">{editableData.address}</span>
-            )}
+          {/* Details Section */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-6 z-10">
+            <div className="flex items-center gap-3 bg-gradient-to-r from-pink-50 via-white to-pink-100 rounded-lg p-4 border border-pink-100 shadow-md">
+              <Mail size={20} className="text-pink-400" />
+              <div>
+                <div className="text-xs text-gray-500 font-bold">Email</div>
+                <div className="text-base font-semibold text-gray-800">{editableData.email}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 bg-gradient-to-r from-yellow-50 via-white to-yellow-100 rounded-lg p-4 border border-yellow-100 shadow-md">
+              <Phone size={20} className="text-yellow-500" />
+              <div>
+                <div className="text-xs text-gray-500 font-bold">Phone</div>
+                <div className="text-base font-semibold text-gray-800">{editableData.phone}</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 bg-gradient-to-r from-purple-50 via-white to-purple-100 rounded-lg p-4 border border-purple-100 shadow-md md:col-span-2">
+              <MapPin size={20} className="text-purple-500" />
+              <div>
+                <div className="text-xs text-gray-500 font-bold">Address</div>
+                <div className="text-base font-semibold text-gray-800">{editableData.address}</div>
+              </div>
+            </div>
           </div>
-
-          {/* Buttons */}
-          <div className="mt-8 flex flex-wrap gap-3">
-            <button
-              onClick={isEditing ? handleSave : () => setIsEditing(true)}
-              className={`flex items-center space-x-2 font-bold py-3 px-6 rounded-full transition-transform duration-300 hover:scale-105 ${
-                isEditing
-                  ? "bg-pink-600 text-white hover:bg-pink-700"
-                  : "bg-white text-pink-600 border-2 border-pink-600 hover:bg-pink-50"
-              }`}
-            >
-              {isEditing ? (
-                <>
-                  <Save size={20} />
-                  <span>Save</span>
-                </>
-              ) : (
-                <>
-                  <Pencil size={20} />
-                  <span>Edit Profile</span>
-                </>
-              )}
-            </button>
-
-            <button
-              onClick={handleLogout} 
-              className="flex items-center space-x-2 bg-pink-600 text-white font-bold py-3 px-6 rounded-full hover:bg-pink-700 transition-transform duration-300 hover:scale-105"
-            >
-              <LogOut size={20} />
-              <span>Logout</span>
-            </button>
-
-            <button
-              onClick={() => navigate("/")}
-              className="flex items-center space-x-2 bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-full hover:bg-gray-300 transition-transform duration-300 hover:scale-105"
-            >
-              <Home size={20} />
-              <span>Back to Home</span>
-            </button>
-          </div>
+          {/* Edit Modal */}
+          {showModal && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+              <div className="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl relative">
+                <button
+                  className="absolute top-4 right-4 text-gray-400 hover:text-pink-600"
+                  onClick={handleCancel}
+                >
+                  <X size={28} />
+                </button>
+                <h2 className="text-2xl font-bold text-pink-600 mb-6 text-center">Edit Profile</h2>
+                <form onSubmit={e => { e.preventDefault(); handleSave(); }} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-600 mb-1">Email</label>
+                    <input
+                      type="email"
+                      value={editableData.email}
+                      onChange={e => setEditableData({ ...editableData, email: e.target.value })}
+                      className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-600 mb-1">Phone</label>
+                    <input
+                      type="text"
+                      value={editableData.phone}
+                      onChange={e => setEditableData({ ...editableData, phone: e.target.value })}
+                      className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-600 mb-1">Address</label>
+                    <input
+                      type="text"
+                      value={editableData.address}
+                      onChange={e => setEditableData({ ...editableData, address: e.target.value })}
+                      className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+                    />
+                  </div>
+                  <div className="flex gap-4 justify-center mt-6">
+                    <button
+                      type="submit"
+                      className="bg-pink-600 text-white font-bold px-6 py-2 rounded-lg flex items-center gap-2 hover:bg-pink-700"
+                    >
+                      <Save size={20} /> Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCancel}
+                      className="bg-gray-200 text-gray-700 font-bold px-6 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-300"
+                    >
+                      <X size={20} /> Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      </main>
     </div>
   );
 };

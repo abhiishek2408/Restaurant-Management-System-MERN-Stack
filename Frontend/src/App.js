@@ -6,6 +6,9 @@ import UserDashboard from "./user/UserDashboard";
 import Home from "./user/Home";
 import MenuPage from "./user/MenuPage";
 import UserProfile from "./user/UserProfile";
+import TimingsPage from "./user/TimingsPage";
+import Privacy from "./user/Privacy";
+import Terms from "./user/Terms";
 import Cart from "./user/Cart";
 import BookTable from "./user/BookTable";
 import BookEvent from "./user/BookEvent";
@@ -29,6 +32,7 @@ import Login from "./auth-pages/Login";
 import Signup from "./auth-pages/Register";
 import { UserProvider } from "./context/UseContext";
 import { LocationProvider } from "./context/LocationContext";
+import { AuthProvider } from "./context/AuthContext";
 import MyReservation from "./user/MyReservation";
 import MyEventReservation from "./user/MyEventReservation";
 
@@ -36,55 +40,56 @@ import HomeAdmin from "./admin/HomeAdmin";
 
 function App() {
   return (
+    <AuthProvider>
       <LocationProvider>
-   <UserProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-       
-            <Route path="/" element={<Navigate to="/user" replace />} />
+        <UserProvider>
+          <Router>
+            <div className="App">
+              <Routes>
+                <Route path="/" element={<Navigate to="/user" replace />} />
 
-            {/* User nested routes */}
-            <Route path="/user" element={<UserDashboard />}>
-              <Route index element={<Home />} />
-              <Route path="menu/:category" element={<MenuPage />} />
-              <Route path="about" element={<About />} />
-             
-              <Route path="booktable" element={<BookTable />} />
-              <Route path="bookevent" element={<BookEvent />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="categorymenu" element={<CategoryMenu />} />        
-              <Route path="userprofile" element={<UserProfile />} />        
-              <Route path="orderhistory" element={<OrderHistory />} />
-              <Route path="contactform" element={<ContactForm />} />
-              <Route path="reservations" element={<MyReservation />} />
-              <Route path="event-reservations" element={<MyEventReservation />} />
-            </Route>
+                {/* User nested routes */}
+                <Route path="/user" element={<UserDashboard />}>
+                  <Route index element={<Home />} />
+                  <Route path="menu/:category" element={<MenuPage />} />
+                  <Route path="about" element={<About />} />
+                  <Route path="timings" element={<TimingsPage />} />
+                  <Route path="privacy" element={<Privacy />} />
+                  <Route path="terms" element={<Terms />} />
+                  <Route path="booktable" element={<BookTable />} />
+                  <Route path="bookevent" element={<BookEvent />} />
+                  <Route path="cart" element={<Cart />} />
+                  <Route path="categorymenu" element={<CategoryMenu />} />        
+                  <Route path="userprofile" element={<UserProfile />} />        
+                  <Route path="orderhistory" element={<OrderHistory />} />
+                  <Route path="contactform" element={<ContactForm />} />
+                  <Route path="reservations" element={<MyReservation />} />
+                  <Route path="event-reservations" element={<MyEventReservation />} />
+                </Route>
 
-            {/* Admin nested routes */}
-            <Route path="/admin" element={<AdminDashboard />}>
-              <Route index element={<HomeAdmin />} />
-              <Route path="manage-order" element={<ManageOrder />} />
-              <Route path="admin-profile" element={<AdminProfile />} />
-              <Route path="manage-offers" element={<UpdateOffers />} />
-              <Route path="manage-users" element={<ManageUsers />} />
-              <Route path="manage-menu" element={<MenuManagement />} />
-              <Route path="barcode" element={<BarcodeScannerInvoice />} />
-              <Route path="settings" element={<div>Settings Page</div>} />
-              <Route path="reports" element={<div>Reports Page</div>} />
-            </Route>
+                {/* Admin nested routes */}
+                <Route path="/admin" element={<AdminDashboard />}>
+                  <Route index element={<HomeAdmin />} />
+                  <Route path="manage-order" element={<ManageOrder />} />
+                  <Route path="admin-profile" element={<AdminProfile />} />
+                  <Route path="manage-offers" element={<UpdateOffers />} />
+                  <Route path="manage-users" element={<ManageUsers />} />
+                  <Route path="manage-menu" element={<MenuManagement />} />
+                  <Route path="barcode" element={<BarcodeScannerInvoice />} />
+                  <Route path="settings" element={<div>Settings Page</div>} />
+                  <Route path="reports" element={<div>Reports Page</div>} />
+                </Route>
 
-            {/* Auth routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/verify/:id" element={<VerifyOtp />} />
-            
-          </Routes>
-        </div>
-      </Router>
-      </UserProvider>
+                {/* Auth routes */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/verify/:id" element={<VerifyOtp />} />
+              </Routes>
+            </div>
+          </Router>
+        </UserProvider>
       </LocationProvider>
-   
+    </AuthProvider>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { Edit } from "lucide-react";
 import UserContext from "../context/UseContext";
 
@@ -21,7 +21,7 @@ const ManageOrder = () => {
     }
   }, [user]);
 
-  const fetchOrders = () => {
+  const fetchOrders = useCallback(() => {
     fetch("http://localhost/onlinerestro/backend/manageOrder.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -42,11 +42,11 @@ const ManageOrder = () => {
         setError("Error fetching orders.");
         setLoading(false);
       });
-  };
+  }, [effectiveUser]);
 
   useEffect(() => {
     if (effectiveUser) fetchOrders();
-  }, [effectiveUser]);
+  }, [effectiveUser, fetchOrders]);
 
   const openUpdateModal = (order) => {
     setSelectedOrder(order);

@@ -87,18 +87,17 @@ const Reservation = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-        Reserve a Table
+    <div className="max-w-2xl mx-auto p-8 bg-white min-h-screen rounded-3xl border border-pink-200">
+      <h1 className="text-4xl font-extrabold text-center mb-8 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 flex items-center justify-center gap-2">
+        <span role="img" aria-label="table">🍽️</span> Reserve a Table
       </h1>
 
- 
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className="border rounded-lg p-2"
+          className="border-2 border-pink-200 rounded-xl p-3 bg-white focus:ring-2 focus:ring-pink-400 text-lg"
         />
 
         <select
@@ -107,7 +106,7 @@ const Reservation = () => {
             setStartTime(e.target.value);
             setEndTime("");
           }}
-          className="border rounded-lg p-2"
+          className="border-2 border-pink-200 rounded-xl p-3 bg-white focus:ring-2 focus:ring-pink-400 text-lg"
         >
           <option value="">Start Time</option>
           {hours.map((h) => (
@@ -120,7 +119,7 @@ const Reservation = () => {
         <select
           value={endTime}
           onChange={(e) => setEndTime(e.target.value)}
-          className="border rounded-lg p-2"
+          className="border-2 border-pink-200 rounded-xl p-3 bg-white focus:ring-2 focus:ring-pink-400 text-lg"
           disabled={!startTime}
         >
           <option value="">End Time</option>
@@ -134,33 +133,33 @@ const Reservation = () => {
         <button
           onClick={handleSearch}
           disabled={loading || !date || !startTime || !endTime}
-          className={`bg-indigo-600 text-white font-semibold rounded-lg px-4 py-2 transition ${
-            loading ? "opacity-50 cursor-not-allowed" : "hover:bg-indigo-700"
+          className={`bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 text-white font-bold rounded-xl px-4 py-2 transition flex items-center justify-center gap-2 text-lg ${
+            loading ? "opacity-50 cursor-not-allowed" : "hover:from-yellow-400 hover:to-pink-500"
           }`}
         >
-          {loading ? "Searching..." : "Search"}
+          {loading ? "Searching..." : <><span role="img" aria-label="search">🔍</span> Search</>}
         </button>
       </div>
 
       {/* Available Tables */}
       {availableTables.length > 0 && (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           {availableTables.map((t) => (
             <div
               key={t._id}
               onClick={() => !booking && setSelectedTable(t._id)}
-              className={`p-4 rounded-xl border-2 cursor-pointer transition-all ${
+              className={`p-6 rounded-2xl border-2 cursor-pointer transition-colors duration-200 flex flex-col gap-2 bg-white ${
                 selectedTable === t._id
-                  ? "border-indigo-500 bg-indigo-50"
-                  : "border-gray-200 hover:border-gray-300"
+                  ? "border-pink-500 bg-pink-50"
+                  : "border-gray-200 hover:border-pink-300"
               }`}
             >
-              <div className="flex justify-between items-center">
-                <span className="font-bold">{t.name}</span>
-                <span className="text-gray-500">{t.capacity} seats</span>
+              <div className="flex justify-between items-center mb-2">
+                <span className="font-extrabold text-lg flex items-center gap-2"><span role="img" aria-label="table">🪑</span> {t.name}</span>
+                <span className="text-pink-600 font-semibold bg-pink-100 px-3 py-1 rounded-full">{t.capacity} seats</span>
               </div>
               <p className="text-xs text-gray-500">
-                {selectedTable === t._id ? "Selected" : "Click to select"}
+                {selectedTable === t._id ? <span className="text-pink-600 font-bold">Selected</span> : "Click to select"}
               </p>
             </div>
           ))}
@@ -169,24 +168,24 @@ const Reservation = () => {
 
       {/* No Tables Found */}
       {searched && !loading && availableTables.length === 0 && (
-        <p className="mt-6 text-center text-red-600 font-medium">
-          No tables available for this time slot.
+        <p className="mt-8 text-center text-red-600 font-bold text-lg">
+          <span role="img" aria-label="no-table">❌</span> No tables available for this time slot.
         </p>
       )}
 
       {/* Confirm Button */}
       {availableTables.length > 0 && (
-        <div className="mt-6 text-center">
+        <div className="mt-8 text-center">
           <button
             onClick={handleBook}
             disabled={!selectedTable || booking}
-            className={`px-6 py-3 font-bold rounded-lg transition ${
+            className={`px-8 py-3 font-bold rounded-xl text-lg transition flex items-center justify-center gap-2 ${
               !selectedTable || booking
                 ? "bg-green-300 text-white cursor-not-allowed"
-                : "bg-green-600 text-white hover:bg-green-700"
+                : "bg-gradient-to-r from-green-500 via-lime-400 to-yellow-300 text-white hover:from-yellow-400 hover:to-green-500"
             }`}
           >
-            {booking ? "Booking..." : "Confirm Reservation"}
+            {booking ? "Booking..." : <><span role="img" aria-label="confirm">✅</span> Confirm Reservation</>}
           </button>
         </div>
       )}

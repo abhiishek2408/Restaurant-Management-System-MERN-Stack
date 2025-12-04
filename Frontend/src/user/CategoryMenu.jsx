@@ -1,8 +1,7 @@
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UserContext from "../context/UseContext";
-import { useNavigate } from "react-router-dom";
+// ...existing code...
 import { Salad, ChefHat, GlassWater } from 'lucide-react';
 // import { motion, AnimatePresence } from "framer-motion";
 
@@ -88,12 +87,12 @@ const CategoryMenu = () => {
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
-      <div className="min-h-screen bg-gray-50 font-sans flex flex-col items-center p-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
-        <h1 className="text-5xl font-bold text-center mb-2 tracking-tight text-gray-800">
+      <div className="min-h-screen bg-white font-sans flex flex-col items-center p-6" style={{ fontFamily: "'Poppins', sans-serif" }}>
+        <h1 className="text-5xl font-extrabold text-center mb-2 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400">
           {selectedCategory === "All" ? "Delicious Food Awaits" : `Category: ${selectedCategory}`}
         </h1>
         <p className="text-xl text-center text-gray-500 mb-8">
-          Explore our wide range of categories.
+          <span className="inline-flex items-center gap-2"><span role="img" aria-label="menu">🍽️</span> Explore our wide range of categories.</span>
         </p>
 
         <div className="flex w-full max-w-7xl overflow-x-auto space-x-3 md:space-x-4 pb-4 px-2 no-scrollbar mb-12">
@@ -104,10 +103,10 @@ const CategoryMenu = () => {
               <button
                 key={name}
                 onClick={() => setSelectedCategory(name)}
-                className={`flex-shrink-0 px-5 py-2 rounded-full font-medium transition-all duration-300 shadow-md transform hover:scale-105
+                className={`flex-shrink-0 px-5 py-2 rounded-full font-semibold shadow-md border border-pink-200 transition-colors duration-200
                   ${isSelected
-                    ? 'bg-pink-500 text-white shadow-pink-300/50'
-                    : 'bg-white text-gray-600 hover:bg-gray-100'
+                    ? 'bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 text-white border-none'
+                    : 'bg-white text-gray-600 hover:bg-pink-50'
                   }`}
               >
                 <div className="flex items-center space-x-2">
@@ -133,8 +132,10 @@ const CategoryMenu = () => {
           {!loading && !error && Object.keys(menuItems).length > 0 && (
             Object.entries(menuItems).map(([catName, items]) => (
               <div key={catName} className="mb-12">
-                <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center md:text-left">{catName}</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <h2 className="text-3xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 text-center md:text-left flex items-center gap-2">
+                  <span role="img" aria-label="category">🍲</span> {catName}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                   {items.map((item, index) => {
                     const isNew = item.is_new === true || item.is_new === 1 || item.is_new === "1";
                     const isSpecialOffer = item.isOffer === true || item.isOffer === 1 || item.isOffer === "1";
@@ -142,32 +143,36 @@ const CategoryMenu = () => {
                     return (
                       <div
                         key={item._id || `${item.name}-${index}`}
-                        className="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer flex flex-col justify-between overflow-hidden"
+                        className="bg-white rounded-3xl shadow-xl border border-pink-100 cursor-pointer flex flex-col justify-between overflow-hidden transition-colors duration-200 hover:border-pink-400"
                         onClick={() => openModal(item)}
                       >
-                        <div className="relative h-48 w-full overflow-hidden">
-                          <img
-                            src={`data:image/jpeg;base64,${item.product_image}`}
-                            alt={item.name}
-                            className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                          />
+                        <div className="relative h-48 w-full overflow-hidden flex items-center justify-center bg-gray-50">
+                          {item.product_image ? (
+                            <img
+                              src={`data:image/jpeg;base64,${item.product_image}`}
+                              alt={item.name}
+                              className="w-full h-full object-cover rounded-t-3xl"
+                            />
+                          ) : (
+                            <span className="text-gray-400 text-lg">No Image</span>
+                          )}
                         </div>
                         <div className="p-6 flex flex-col flex-grow">
-                          <h3 className="text-xl font-semibold mb-2 text-gray-900">
+                          <h3 className="text-xl font-bold mb-2 text-gray-900 flex items-center gap-2">
                             {item.name}
-                            {isNew && <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded">New</span>}
-                            {isSpecialOffer && <span className="bg-red-100 text-pink-700 text-xs px-2 py-1 rounded">Special Offer</span>}
+                            {isNew && <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full ml-2">New</span>}
+                            {isSpecialOffer && <span className="bg-red-100 text-pink-700 text-xs px-2 py-1 rounded-full ml-2">Special Offer</span>}
                           </h3>
                           <p className="text-sm text-gray-500 mt-2 line-clamp-2">{item.description}</p>
 
                           <div className="mt-2 text-sm text-gray-500 flex flex-wrap gap-3">
-                            {item.vegan ? <span>🥦 Vegan</span> : null}
-                            {item.rating ? <span>⭐ {item.rating}</span> : null}
+                            {item.vegan ? <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded-full">🥦 Vegan</span> : null}
+                            {item.rating ? <span className="inline-flex items-center gap-1 bg-yellow-50 text-yellow-700 px-2 py-1 rounded-full">⭐ {item.rating}</span> : null}
                           </div>
 
-                          <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
-                            <span className="text-2xl font-bold text-pink-500">₹{item.price}</span>
-                            <span className="text-sm text-gray-500">{item.time} min</span>
+                          <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
+                            <span className="text-2xl font-extrabold text-pink-500">₹{item.price}</span>
+                            <span className="text-sm text-gray-500 flex items-center gap-1"><span role="img" aria-label="time">⏱️</span> {item.time} min</span>
                           </div>
                         </div>
                       </div>

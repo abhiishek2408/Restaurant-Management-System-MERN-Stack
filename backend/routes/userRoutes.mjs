@@ -1,5 +1,6 @@
 import express from "express";
-import { ObjectId } from "mongodb";
+import mongoose from "mongoose";
+import User from "../models/User.mjs";
 
 const router = express.Router();
 
@@ -48,7 +49,6 @@ router.post("/delete-user", async (req, res) => {
 
 // =================== Update User ===================
 router.post("/update-user", async (req, res) => {
-  const db = req.app.locals.db;
   const {
     user_id,
     username,
@@ -70,16 +70,17 @@ router.post("/update-user", async (req, res) => {
   if (phone) updateFields.phone = phone;
   if (address) updateFields.address = address;
   if (bio) updateFields.bio = bio;
-  if (profile_img) updateFields.profile_img = Buffer.from(profile_img, "base64");
+  if (profile_img) updateFields.profileImg = profile_img;
 
   try {
-    const result = await db
-      .collection("users")
-      .updateOne({ _id: new ObjectId(user_id) }, { $set: updateFields });
-
-    if (result.matchedCount === 0)
+    const result = await User.findByIdAndUpdate(
+      user_id,
+      { $set: updateFields },
+      { new: true }
+    );
+    if (!result) {
       return res.json({ success: false, message: "User not found" });
-
+    }
     res.json({ success: true, message: "User updated successfully." });
   } catch (err) {
     console.error("Update user error:", err);

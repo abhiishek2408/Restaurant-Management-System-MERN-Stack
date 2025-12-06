@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const UserProfile = () => {
+const MyProfile = () => {
     const [user, setUser] = useState(null);  // to store user data
     const [error, setError] = useState(null);  // to store any error messages
 
@@ -60,4 +60,4 @@ const UserProfile = () => {
     );
 };
 
-export default UserProfile;
+export default MyProfile;

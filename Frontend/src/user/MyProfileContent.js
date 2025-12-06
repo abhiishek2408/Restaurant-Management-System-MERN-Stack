@@ -15,7 +15,7 @@ const Profile = () => {
     address: "",
   });
 
-  console.log("User:: ",user);
+ // console.log("User:: ",user);
 
   useEffect(() => {
     if (user) {
@@ -52,42 +52,16 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <p className="text-center text-lg text-gray-600 mt-20">
-        No user data found. Please log in.
-      </p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-center text-lg text-gray-600">No user data found. Please log in.</p>
+      </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-yellow-50 to-purple-100 flex flex-row items-start px-0 pt-2">
-      {/* Sidebar */}
-      <aside className="h-full min-h-screen w-64 bg-gradient-to-b from-pink-100 via-yellow-50 to-purple-100 backdrop-blur-lg border-r-2 border-pink-200 flex flex-col items-center pt-4 px-4 sticky top-0 z-20 shadow-xl">
-        <div className="flex flex-col items-center mb-8 mt-0">
-          <img
-            src={user.profile_img || "https://cdn.vectorstock.com/i/500p/96/75/gray-scale-male-character-profile-picture-vector-51589675.jpg"}
-            alt="Profile"
-            className="w-24 h-24 rounded-full border-4 border-gradient-to-r from-pink-400 via-yellow-400 to-purple-400 object-cover shadow-xl mb-2"
-          />
-          <span className="text-lg font-bold text-pink-600 mt-1">{user.username}</span>
-        </div>
-        <nav className="flex flex-col gap-6 w-full">
-          <button onClick={() => navigate("/")} className="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-gray-700 hover:bg-gray-100 transition-colors">
-            <Home size={20} className="text-gray-700" /> Home
-          </button>
-          <button onClick={() => navigate("/order-history")} className="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-pink-600 hover:bg-pink-50 transition-colors">
-            <Star size={20} className="text-yellow-500" /> Orders
-          </button>
-          <button onClick={handleEdit} className="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-yellow-500 hover:bg-yellow-50 transition-colors">
-            <Pencil size={20} className="text-pink-500" /> Edit Profile
-          </button>
-          <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2 rounded-lg font-semibold text-purple-500 hover:bg-purple-50 transition-colors">
-            <LogOut size={20} className="text-purple-500" /> Logout
-          </button>
-        </nav>
-      </aside>
-      {/* Main Profile Card */}
+    <div className="min-h-screen bg-white flex justify-center items-start px-0 pt-2">
       <main className="flex-1 flex justify-center items-start px-4">
-        <div className="w-full max-w-2xl bg-gradient-to-br from-white via-pink-50 to-purple-50 backdrop-blur-lg rounded-2xl p-6 flex flex-col items-center border border-gray-200 bg-clip-padding relative">
+        <div className="w-full max-w-2xl bg-white rounded-2xl p-6 flex flex-col items-center border border-gray-200 bg-clip-padding relative">
           {/* SVG background */}
           <svg className="absolute top-0 left-0 w-full h-full -z-10" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <ellipse cx="500" cy="100" rx="120" ry="60" fill="#fceabb" fillOpacity="0.25" />
@@ -157,64 +131,6 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          {/* Edit Modal */}
-          {showModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-              <div className="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl relative">
-                <button
-                  className="absolute top-4 right-4 text-gray-400 hover:text-pink-600"
-                  onClick={handleCancel}
-                >
-                  <X size={28} />
-                </button>
-                <h2 className="text-2xl font-bold text-pink-600 mb-6 text-center">Edit Profile</h2>
-                <form onSubmit={e => { e.preventDefault(); handleSave(); }} className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-600 mb-1">Email</label>
-                    <input
-                      type="email"
-                      value={editableData.email}
-                      onChange={e => setEditableData({ ...editableData, email: e.target.value })}
-                      className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-600 mb-1">Phone</label>
-                    <input
-                      type="text"
-                      value={editableData.phone}
-                      onChange={e => setEditableData({ ...editableData, phone: e.target.value })}
-                      className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-600 mb-1">Address</label>
-                    <input
-                      type="text"
-                      value={editableData.address}
-                      onChange={e => setEditableData({ ...editableData, address: e.target.value })}
-                      className="w-full px-4 py-2 border border-pink-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-                    />
-                  </div>
-                  <div className="flex gap-4 justify-center mt-6">
-                    <button
-                      type="submit"
-                      className="bg-pink-600 text-white font-bold px-6 py-2 rounded-lg flex items-center gap-2 hover:bg-pink-700"
-                    >
-                      <Save size={20} /> Save
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleCancel}
-                      className="bg-gray-200 text-gray-700 font-bold px-6 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-300"
-                    >
-                      <X size={20} /> Cancel
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
         </div>
       </main>
     </div>

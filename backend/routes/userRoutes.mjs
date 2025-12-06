@@ -82,8 +82,8 @@ router.post("/update-user", async (req, res) => {
 
     res.json({ success: true, message: "User updated successfully." });
   } catch (err) {
-    console.error(err);
-    res.json({ success: false, message: "Error updating user." });
+    console.error("Update user error:", err);
+    res.json({ success: false, message: `Error updating user. ${err && err.message ? err.message : ''}` });
   }
 });
 

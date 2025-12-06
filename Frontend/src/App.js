@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import UserDashboard from "./user/UserDashboard";
 import Home from "./user/Home";
 import MenuPage from "./user/MenuPage";
-import UserProfile from "./user/UserProfile";
+import MyProfile from "./user/MyProfile";
+import MyProfileContent from "./user/MyProfileContent";
 import TimingsPage from "./user/TimingsPage";
 import Privacy from "./user/Privacy";
 import Terms from "./user/Terms";
@@ -13,7 +14,7 @@ import Cart from "./user/Cart";
 import BookTable from "./user/BookTable";
 import BookEvent from "./user/BookEvent";
 import CategoryMenu from "./user/CategoryMenu";
-import OrderHistory from "./user/OrderHistory";
+import MyOrders from "./user/MyOrders";
 import ContactForm from "./user/ContactForm";
 import About from "./user/About";
 
@@ -60,8 +61,11 @@ function App() {
                   <Route path="bookevent" element={<BookEvent />} />
                   <Route path="cart" element={<Cart />} />
                   <Route path="categorymenu" element={<CategoryMenu />} />        
-                  <Route path="userprofile" element={<UserProfile />} />        
-                  <Route path="orderhistory" element={<OrderHistory />} />
+                  <Route path="userprofile" element={<MyProfile />}> 
+                    <Route index element={<MyProfileContent />} />
+                    <Route path="orders" element={<div className='p-8 text-center text-gray-600'>Orders page coming soon.</div>} />
+                    <Route path="orderhistory" element={<MyOrders />} />
+                  </Route>
                   <Route path="contactform" element={<ContactForm />} />
                   <Route path="reservations" element={<MyReservation />} />
                   <Route path="event-reservations" element={<MyEventReservation />} />

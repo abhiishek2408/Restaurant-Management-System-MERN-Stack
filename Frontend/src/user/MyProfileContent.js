@@ -1,54 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import UserContext from "../context/UseContext";
-import { useNavigate } from "react-router-dom";
-import { Mail, Phone, MapPin, LogOut, Home, Pencil, Save, X, Star, Heart, MessageCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Star, Heart, MessageCircle } from "lucide-react";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
 
-  // Removed isEditing and setIsEditing (unused)
-  const [showModal, setShowModal] = useState(false);
-  const [editableData, setEditableData] = useState({
-    email: "",
-    phone: "",
-    address: "",
-  });
 
- // console.log("User:: ",user);
 
-  useEffect(() => {
-    if (user) {
-      setEditableData({
-        email: user.email || "",
-        phone: user.phone || "",
-        address: user.address || "",
-      });
-    }
-  }, [user]);
-
-  const handleLogout = () => {
-    navigate("/login");
-  };
-
-  const handleEdit = () => {
-    setShowModal(true);
-  };
-
-  const handleSave = () => {
-    setShowModal(false);
-    // Here you would send updated data to backend if needed
-  };
-
-  const handleCancel = () => {
-    setShowModal(false);
-    // Optionally reset editableData to user data
-    setEditableData({
-      email: user.email || "",
-      phone: user.phone || "",
-      address: user.address || "",
-    });
-  };
 
   if (!user) {
     return (
@@ -113,21 +71,21 @@ const Profile = () => {
               <Mail size={20} className="text-pink-400" />
               <div>
                 <div className="text-xs text-gray-500 font-bold">Email</div>
-                <div className="text-base font-semibold text-gray-800">{editableData.email}</div>
+                <div className="text-base font-semibold text-gray-800">{user.email}</div>
               </div>
             </div>
             <div className="flex items-center gap-3 bg-gradient-to-r from-yellow-50 via-white to-yellow-100 rounded-lg p-4 border border-yellow-100 shadow-md">
               <Phone size={20} className="text-yellow-500" />
               <div>
                 <div className="text-xs text-gray-500 font-bold">Phone</div>
-                <div className="text-base font-semibold text-gray-800">{editableData.phone}</div>
+                <div className="text-base font-semibold text-gray-800">{user.phone}</div>
               </div>
             </div>
             <div className="flex items-center gap-3 bg-gradient-to-r from-purple-50 via-white to-purple-100 rounded-lg p-4 border border-purple-100 shadow-md md:col-span-2">
               <MapPin size={20} className="text-purple-500" />
               <div>
                 <div className="text-xs text-gray-500 font-bold">Address</div>
-                <div className="text-base font-semibold text-gray-800">{editableData.address}</div>
+                <div className="text-base font-semibold text-gray-800">{user.address}</div>
               </div>
             </div>
           </div>

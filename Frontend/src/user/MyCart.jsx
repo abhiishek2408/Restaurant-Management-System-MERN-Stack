@@ -4,6 +4,11 @@ import { Toaster, toast } from "react-hot-toast";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { AuthContext } from "../context/AuthContext";
 
+// Helper to check if user context is loaded
+function isUserLoaded(user) {
+  return user && user._id;
+}
+
 const Cart = () => {
   const { user } = useContext(AuthContext);
   const [cartDetails, setCartDetails] = useState([]);
@@ -27,15 +32,21 @@ const Cart = () => {
   });
   const [isSavingAddress, setIsSavingAddress] = useState(false);
 
-  /** Fetch cart items */
+  /** Fetch cart items, including after user context loads from localStorage */
   useEffect(() => {
-    if (!user?._id) return;
-
+    if (!isUserLoaded(user)) {
+      // Wait for user context to load from localStorage
+      setIsLoading(true);
+      return;
+    }
     const fetchCart = async () => {
+      setIsLoading(true);
+      console.log("[Cart] Fetching cart for user ID:", user._id);
       try {
         const res = await axios.get(
           `https://restaurant-management-system-mern-stack.onrender.com/api/cart/get-cart/${user._id}`
         );
+        console.log("[Cart] Backend response:", res.data);
         if (res.data.success) {
           setCartDetails(res.data.cart);
           setError(null);
@@ -45,7 +56,7 @@ const Cart = () => {
           toast.error("No cart data found.");
         }
       } catch (err) {
-        console.error(err);
+        console.error("[Cart] Error fetching cart data:", err);
         setError("Error fetching cart data.");
         toast.error("Error fetching cart data.");
       } finally {

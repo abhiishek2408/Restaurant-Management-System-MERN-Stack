@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import UserContext from "../context/UseContext";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
-import { LogOut, Home, Pencil, Save, X, Star, Receipt,Orders, Document, Clock } from "lucide-react";
+import { LogOut, Home, Pencil, Save, X, Clock } from "lucide-react";
 import { MessageCircle, CreditCard, ShoppingCart, Gift } from "lucide-react";
 
 const MyProfile = () => {

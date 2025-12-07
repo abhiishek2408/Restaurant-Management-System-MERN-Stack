@@ -1,11 +1,20 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
 
 // Create Context
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Synchronously set initial user from localStorage for instant context
+  const initialUser = (() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch {
+      return null;
+    }
+  })();
+  const [user, setUser] = useState(initialUser);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -112,11 +121,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ---------------- AUTO LOAD USER ----------------
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
-  }, []);
+  // Remove useEffect for initial user load (now handled synchronously)
 
   return (
     <AuthContext.Provider

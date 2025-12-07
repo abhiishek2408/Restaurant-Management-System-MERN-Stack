@@ -78,8 +78,8 @@ router.get("/manage-orders", async (req, res) => {
 
 
 
-// =================== Order History (Completed) ===================
-router.post("/order-history", async (req, res) => {
+// =================== All Orders (Completed) ===================
+router.post("/all-order", async (req, res) => {
   try {
     const { user_id } = req.body;
 
@@ -87,7 +87,7 @@ router.post("/order-history", async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid or missing user_id" });
     }
 
-    // Fetch orders for this user and sort by latest first
+    // Fetch all orders for this user and sort by latest first
     const orders = await ManageOrder.find({ user_id }).sort({ added_at: -1 });
 
     if (!orders || orders.length === 0) {
@@ -97,6 +97,34 @@ router.post("/order-history", async (req, res) => {
     res.status(200).json({ success: true, data: orders });
   } catch (error) {
     console.error("Error fetching order history:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+
+// =================== Orders by Status ===================
+// Fetch orders for a user filtered by status (e.g., pending, completed, cancelled)
+router.post("/orders-by-status", async (req, res) => {
+  try {
+    const { user_id, status } = req.body;
+
+    if (!user_id || !mongoose.Types.ObjectId.isValid(user_id)) {
+      return res.status(400).json({ success: false, message: "Invalid or missing user_id" });
+    }
+    if (!status || typeof status !== "string") {
+      return res.status(400).json({ success: false, message: "Invalid or missing status" });
+    }
+
+    // Fetch orders for this user with the given status
+    const orders = await ManageOrder.find({ user_id, state: status }).sort({ added_at: -1 });
+
+    if (!orders || orders.length === 0) {
+      return res.status(200).json({ success: false, message: `No orders found for status: ${status}` });
+    }
+
+    res.status(200).json({ success: true, data: orders });
+  } catch (error) {
+    console.error("Error fetching orders by status:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });

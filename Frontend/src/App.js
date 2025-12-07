@@ -10,7 +10,7 @@ import MyProfileContent from "./user/MyProfileContent";
 import TimingsPage from "./user/TimingsPage";
 import Privacy from "./user/Privacy";
 import Terms from "./user/Terms";
-import Cart from "./user/Cart";
+import MyCart from "./user/MyCart";
 import BookTable from "./user/BookTable";
 import BookEvent from "./user/BookEvent";
 import CategoryMenu from "./user/CategoryMenu";
@@ -59,7 +59,7 @@ function App() {
                   <Route path="terms" element={<Terms />} />
                   <Route path="booktable" element={<BookTable />} />
                   <Route path="bookevent" element={<BookEvent />} />
-                  <Route path="cart" element={<Cart />} />
+                  <Route path="cart" element={<MyCart />} />
                   <Route path="categorymenu" element={<CategoryMenu />} />        
                   <Route path="userprofile" element={<MyProfile />}> 
                     <Route index element={<MyProfileContent />} />

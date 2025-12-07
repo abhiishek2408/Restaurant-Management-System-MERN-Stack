@@ -27,7 +27,6 @@ const dropdownLinks = [
 
 const profileLinks = [
   { name: "View Profile", path: "/user/userprofile" },
-  { name: "Order History", path: "/user/orderhistory" },
   { name: "Reserved Table", path: "/user/reservations" },
   { name: "Reserved Event", path: "/user/event-reservations" },
 ];

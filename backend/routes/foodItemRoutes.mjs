@@ -19,7 +19,10 @@ router.get("/all", async (req, res) => {
       query.is_active = true; // ✅ Only active items
       query.isArchive = false; // ✅ Exclude archived items
 
-      if (city && city.trim()) query["locations.city"] = city.trim();
+      if (city && city.trim()) {
+        // Use case-insensitive and trimmed matching for city
+        query["locations.city"] = { $regex: `^${city.trim()}$`, $options: "i" };
+      }
       if (zipcode && !isNaN(zipcode))
         query["locations.zipcode"] = Number(zipcode);
       if (locationName && locationName.trim())

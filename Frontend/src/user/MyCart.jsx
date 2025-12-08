@@ -329,7 +329,14 @@ const Cart = () => {
           <h2 className="text-2xl font-bold mb-4">Your Cart ({cartDetails.length})</h2>
           {error && <p className="text-red-500">{error}</p>}
           {isLoading ? (
-            <p>Loading...</p>
+            <div className="flex flex-col items-center justify-center py-12">
+              <div className="relative w-16 h-16 flex items-center justify-center">
+                <span className="absolute inline-block w-16 h-16 rounded-full border-4 border-pink-400 border-t-transparent animate-spin"></span>
+                <span className="absolute inline-block w-12 h-12 rounded-full border-4 border-fuchsia-400 border-t-transparent animate-spin [animation-duration:1.2s]"></span>
+                <span className="absolute inline-block w-8 h-8 rounded-full border-4 border-yellow-300 border-t-transparent animate-spin [animation-duration:1.6s]"></span>
+              </div>
+              <span className="mt-6 text-pink-500 font-semibold text-lg animate-pulse">Loading your cart...</span>
+            </div>
           ) : cartDetails.length ? (
             cartDetails.map((item) => (
               <div

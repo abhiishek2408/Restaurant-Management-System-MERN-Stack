@@ -114,17 +114,24 @@ const MyProfile = () => {
           <button onClick={() => navigate("/user/userprofile/orderhistory")} className={`flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-normal text-gray-600 hover:bg-blue-50 transition-colors ${location.pathname === '/user/userprofile/orderhistory' ? 'bg-blue-50 text-gray-600 font-medium' : ''}`}> 
             <Clock size={20} className="text-gray-600" /> My Order
           </button>
+          <button onClick={() => navigate("/user/userprofile/reservations")} className={`flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-normal text-gray-600 hover:bg-pink-50 transition-colors ${location.pathname === '/user/userprofile/bookedtable' ? 'bg-pink-50 text-gray-600 font-medium' : ''}`}> 
+            <ShoppingCart size={20} className="text-gray-600" /> My booked Table
+          </button>
+          <button onClick={() => navigate("/user/userprofile/event-reservations")} className={`flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-normal text-gray-600 hover:bg-pink-50 transition-colors ${location.pathname === '/user/userprofile/bookedevent' ? 'bg-pink-50 text-gray-600 font-medium' : ''}`}> 
+            <Gift size={20} className="text-gray-600" /> My Booked Event
+          </button>
+
           <button className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-normal text-gray-600 hover:bg-gray-100 transition-colors" disabled>
-            <MessageCircle size={20} className="text-gray-400" /> Customer Care
+            <MessageCircle size={20} className="text-gray-600" /> Customer Care
           </button>
           <button className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-normal text-gray-600 hover:bg-gray-100 transition-colors" disabled>
-            <CreditCard size={20} className="text-gray-400" /> Saved Cards
+            <CreditCard size={20} className="text-gray-600" /> Saved Cards
           </button>
           <button className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-normal text-gray-600 hover:bg-gray-100 transition-colors" disabled>
-            <ShoppingCart size={20} className="text-gray-400" /> Pending Payments
+            <ShoppingCart size={20} className="text-gray-600" /> Pending Payments
           </button>
           <button className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-normal text-gray-600 hover:bg-gray-100 transition-colors" disabled>
-            <Gift size={20} className="text-gray-400" /> Gift Cards
+            <Gift size={20} className="text-gray-600" /> Gift Cards
           </button>
           <button onClick={handleEdit} className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-normal text-gray-600 hover:bg-yellow-50 transition-colors">
             <Pencil size={20} className="text-gray-600" /> Edit Profile

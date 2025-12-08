@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from "react";
+import ItemDetails from "./ItemDetails";
 import axios from "axios";
-// ...existing code...
-import { Salad, ChefHat, GlassWater } from 'lucide-react';
+import { Salad, ChefHat, GlassWater, Star, Clock } from 'lucide-react';
 // import { motion, AnimatePresence } from "framer-motion";
 
 
@@ -32,10 +32,8 @@ const SkeletonCard = () => (
 );
 
 const CategoryMenu = () => {
-  // Removed unused: user, navigate, modalData, quantity, setQuantity
-  // But setModalData is needed for openModal, so define it without using modalData
-  // eslint-disable-next-line no-unused-vars
-  const [, setModalData] = useState(null);
+  // Use selectedItem for modal
+  const [selectedItem, setSelectedItem] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [menuItems, setMenuItems] = useState({});
   const [loading, setLoading] = useState(false);
@@ -43,8 +41,7 @@ const CategoryMenu = () => {
 
   // Define openModal to fix no-undef error
   const openModal = (item) => {
-    setModalData(item);
-    // If you have a modal open state, set it here, e.g. setShowModal(true);
+    setSelectedItem(item);
   };
   // const [toast, setToast] = useState(null);
 
@@ -91,6 +88,7 @@ const CategoryMenu = () => {
         <h1 className="text-5xl font-extrabold text-center mb-2 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400">
           {selectedCategory === "All" ? "Delicious Food Awaits" : `Category: ${selectedCategory}`}
         </h1>
+
         <p className="text-xl text-center text-gray-500 mb-8">
           <span className="inline-flex items-center gap-2"><span role="img" aria-label="menu">🍽️</span> Explore our wide range of categories.</span>
         </p>
@@ -132,8 +130,8 @@ const CategoryMenu = () => {
           {!loading && !error && Object.keys(menuItems).length > 0 && (
             Object.entries(menuItems).map(([catName, items]) => (
               <div key={catName} className="mb-12">
-                <h2 className="text-3xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 text-center md:text-left flex items-center gap-2">
-                  <span role="img" aria-label="category">🍲</span> {catName}
+                <h2 className="text-3xl font-extrabold mb-6 ml-4 text-bg-grey flex items-center gap-2">
+                 {catName}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                   {items.map((item, index) => {
@@ -143,10 +141,11 @@ const CategoryMenu = () => {
                     return (
                       <div
                         key={item._id || `${item.name}-${index}`}
-                        className="bg-white rounded-3xl shadow-xl border border-pink-100 cursor-pointer flex flex-col justify-between overflow-hidden transition-colors duration-200 hover:border-pink-400"
+                        className="bg-white rounded-3xl shadow-xl border border-pink-100 cursor-pointer flex flex-col overflow-hidden transition-colors duration-200 hover:border-pink-400"
                         onClick={() => openModal(item)}
                       >
-                        <div className="relative h-48 w-full overflow-hidden flex items-center justify-center bg-gray-50">
+                        {/* Image */}
+                        <div className="relative h-44 w-full overflow-hidden flex items-center justify-center bg-gray-50">
                           {item.product_image ? (
                             <img
                               src={`data:image/jpeg;base64,${item.product_image}`}
@@ -157,27 +156,60 @@ const CategoryMenu = () => {
                             <span className="text-gray-400 text-lg">No Image</span>
                           )}
                         </div>
-                        <div className="p-6 flex flex-col flex-grow">
-                          <h3 className="text-xl font-bold mb-2 text-gray-900 flex items-center gap-2">
-                            {item.name}
-                            {isNew && <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full ml-2">New</span>}
-                            {isSpecialOffer && <span className="bg-red-100 text-pink-700 text-xs px-2 py-1 rounded-full ml-2">Special Offer</span>}
-                          </h3>
-                          <p className="text-sm text-gray-500 mt-2 line-clamp-2">{item.description}</p>
+                        {/* Content */}
+                        <div className="p-5 flex flex-col flex-grow justify-between">
+                          {/* Name & Badges in single line */}
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-base text-black leading-snug truncate mr-2" style={{ fontFamily: 'Poppins, Montserrat, Arial, sans-serif' }}>
+                              {item.name}
+                            </p>
+                            <div className="flex gap-2 flex-shrink-0">
+                              {isNew && <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">New</span>}
+                              {isSpecialOffer && <span className="bg-red-100 text-pink-700 text-xs px-2 py-1 rounded-full">Special Offer</span>}
+                            </div>
+                          </div>
+                          {/* Description */}
+                          <p className="text-sm text-gray-500 mb-3 truncate">{item.description}</p>
 
-                          <div className="mt-2 text-sm text-gray-500 flex flex-wrap gap-3">
-                            {item.vegan ? <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded-full">🥦 Vegan</span> : null}
-                            {item.rating ? <span className="inline-flex items-center gap-1 bg-yellow-50 text-yellow-700 px-2 py-1 rounded-full">⭐ {item.rating}</span> : null}
+                          {/* Tags */}
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {item.vegan && <span className="inline-flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded-full"><Salad className="w-4 h-4" /> Vegan</span>}
+                            {item.rating && <span className="inline-flex items-center gap-1 bg-yellow-50 text-yellow-700 px-2 py-1 rounded-full"><Star className="w-4 h-4" /> {item.rating}</span>}
                           </div>
 
-                          <div className="flex items-center justify-between mt-auto pt-2 border-t border-gray-100">
-                            <span className="text-2xl font-extrabold text-pink-500">₹{item.price}</span>
-                            <span className="text-sm text-gray-500 flex items-center gap-1"><span role="img" aria-label="time">⏱️</span> {item.time} min</span>
+                          {/* Price & Time */}
+                          <div className="flex items-center justify-between pt-2 border-t border-gray-100">
+                            <span className="text-base font-semibold text-pink-500">₹{item.price}</span>
+                            <span className="text-sm text-gray-500 flex items-center gap-1">
+                              <Clock className="w-4 h-4" />
+                              {(() => {
+                                if (typeof item.time === 'string' && item.time.includes(':')) {
+                                  // Split by ':' and get the last part (seconds or minutes)
+                                  const parts = item.time.split(':');
+                                  // If format is hh:mm:ss, use mm or ss as needed
+                                  if (parts.length === 3) {
+                                    // If seconds is not zero, use seconds, else use minutes
+                                    return parseInt(parts[2], 10) > 0 ? `${parseInt(parts[2], 10)} min` : `${parseInt(parts[1], 10)} min`;
+                                  } else if (parts.length === 2) {
+                                    return `${parseInt(parts[1], 10)} min`;
+                                  }
+                                }
+                                // If it's a number or a string number
+                                return `${parseInt(item.time, 10)} min`;
+                              })()}
+                            </span>
                           </div>
                         </div>
                       </div>
                     )
                   })}
+                  {/* ItemDetails Modal */}
+                  {selectedItem && (
+                    <ItemDetails
+                      item={selectedItem}
+                      onClose={() => setSelectedItem(null)}
+                    />
+                  )}
                 </div>
               </div>
             ))

@@ -34,8 +34,8 @@ import Signup from "./auth-pages/Register";
 import { UserProvider } from "./context/UseContext";
 import { LocationProvider } from "./context/LocationContext";
 import { AuthProvider } from "./context/AuthContext";
-import MyReservation from "./user/MyReservation";
-import MyEventReservation from "./user/MyEventReservation";
+import MyBookedTable from "./user/MyBookedTable";
+import MyBookedEvent from "./user/MyBookedEvent";
 
 import HomeAdmin from "./admin/HomeAdmin";
 
@@ -65,10 +65,11 @@ function App() {
                     <Route index element={<MyProfileContent />} />
                     <Route path="orders" element={<div className='p-8 text-center text-gray-600'>Orders page coming soon.</div>} />
                     <Route path="orderhistory" element={<MyOrders />} />
+                  <Route path="event-reservations" element={<MyBookedEvent />} />
+                  <Route path="reservations" element={<MyBookedTable />} />
                   </Route>
                   <Route path="contactform" element={<ContactForm />} />
-                  <Route path="reservations" element={<MyReservation />} />
-                  <Route path="event-reservations" element={<MyEventReservation />} />
+                  
                 </Route>
 
                 {/* Admin nested routes */}

@@ -12,7 +12,7 @@ const Contact = () => {
   const skeletonClass = "animate-pulse bg-gray-200 rounded-lg";
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
+    <section id="contact" className="mt-12 pt-8 pb-20 relative overflow-hidden border-2 border-gray-200 rounded-3xl shadow-lg bg-white/70 backdrop-blur">
       {/* Decorative background pattern */}
       <div className="absolute inset-0 pointer-events-none select-none opacity-30" aria-hidden="true" style={{zIndex:0}}>
         <svg width="100%" height="100%" className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,7 @@ const Contact = () => {
           {loading ? (
             <div className={`${skeletonClass} h-40`}></div>
           ) : (
-            <div className="bg-white/90 p-8 rounded-2xl shadow-lg hover:shadow-pink-200/80 hover:-translate-y-1 transition-all duration-300 border border-pink-100 flex flex-col items-center group">
+            <div className="bg-white/90 p-8 rounded-2xl shadow-lg hover:shadow-pink-200/80 hover:-translate-y-1 transition-all duration-300 border-2 border-pink-200/60 flex flex-col items-center group">
               <div className="mb-3 text-3xl text-pink-400 group-hover:scale-110 transition-transform duration-300">
                 <i className="fa fa-map-marker-alt"></i>
               </div>
@@ -66,7 +66,7 @@ const Contact = () => {
           {loading ? (
             <div className={`${skeletonClass} h-40`}></div>
           ) : (
-            <div className="bg-white/90 p-8 rounded-2xl shadow-lg hover:shadow-yellow-200/80 hover:-translate-y-1 transition-all duration-300 border border-pink-100 flex flex-col items-center group">
+            <div className="bg-white/90 p-8 rounded-2xl shadow-lg hover:shadow-yellow-200/80 hover:-translate-y-1 transition-all duration-300 border-2 border-yellow-200/60 flex flex-col items-center group">
               <div className="mb-3 text-3xl text-yellow-400 group-hover:scale-110 transition-transform duration-300">
                 <i className="fa fa-clock"></i>
               </div>
@@ -80,7 +80,7 @@ const Contact = () => {
           {loading ? (
             <div className={`${skeletonClass} h-40`}></div>
           ) : (
-            <div className="bg-white/90 p-8 rounded-2xl shadow-lg hover:shadow-fuchsia-200/80 hover:-translate-y-1 transition-all duration-300 border border-pink-100 flex flex-col items-center group">
+            <div className="bg-white/90 p-8 rounded-2xl shadow-lg hover:shadow-fuchsia-200/80 hover:-translate-y-1 transition-all duration-300 border-2 border-fuchsia-200/60 flex flex-col items-center group">
               <div className="mb-3 text-3xl text-fuchsia-500 group-hover:scale-110 transition-transform duration-300">
                 <i className="fa fa-phone"></i>
               </div>

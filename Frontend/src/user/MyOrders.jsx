@@ -25,62 +25,50 @@ const MyOrders = () => {
     }
   }, [user]);
 
-  // Fetch orders once we have a valid user
+  // Fetch orders based on tab selection
   useEffect(() => {
     if (!effectiveUser || !effectiveUser._id) return;
+    setLoading(true);
+    setError("");
 
-    fetch('https://restaurant-management-system-mern-stack.onrender.com/api/orders/all-order', {
-      method: 'POST',
+    let url = "https://restaurant-management-system-mern-stack.onrender.com/api/orders/all-order";
+    let body = { user_id: effectiveUser._id };
+
+    if (statusFilter !== "All") {
+      url = "https://restaurant-management-system-mern-stack.onrender.com/api/orders/orders-by-status";
+      // Map tab label to backend status value
+      let statusValue = statusFilter;
+      if (statusFilter === "In Progress") statusValue = "Pending";
+      if (statusFilter === "Delivered") statusValue = "Completed";
+      body.status = statusValue;
+    }
+
+    fetch(url, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      credentials: 'include',
-      body: JSON.stringify({ user_id: effectiveUser._id }),
+      credentials: "include",
+      body: JSON.stringify(body),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
           setOrders(data.data);
-          setError('');
+          setError("");
         } else {
-          setError(data.message || 'No orders found.');
+          setOrders([]);
+          setError(data.message || "No orders found.");
         }
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Fetch error:', err);
-        setError('Error fetching orders.');
+        console.error("Fetch error:", err);
+        setOrders([]);
+        setError("Error fetching orders.");
         setLoading(false);
       });
-  }, [effectiveUser]);
-
-  if (loading) return (
-    <div className="flex flex-col items-center justify-center min-h-[300px]">
-      <span className="mb-6">
-        <svg className="animate-spin h-16 w-16 text-pink-500" viewBox="0 0 50 50">
-          <defs>
-            <linearGradient id="loader-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#f472b6" />
-              <stop offset="50%" stopColor="#fbbf24" />
-              <stop offset="100%" stopColor="#a78bfa" />
-            </linearGradient>
-          </defs>
-          <circle
-            cx="25"
-            cy="25"
-            r="20"
-            fill="none"
-            stroke="url(#loader-gradient)"
-            strokeWidth="6"
-            strokeDasharray="90 60"
-            strokeLinecap="round"
-          />
-        </svg>
-      </span>
-      <span className="text-lg font-bold bg-gradient-to-r from-pink-400 via-yellow-400 to-purple-400 bg-clip-text text-transparent animate-pulse">Loading your orders...</span>
-    </div>
-  );
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  }, [effectiveUser, statusFilter]);
 
   // Status tab options
   const statusTabs = [
@@ -90,8 +78,65 @@ const MyOrders = () => {
     { label: 'Cancelled', value: 'Cancelled' },
   ];
 
-  // Filter orders by status
-  const filteredOrders = statusFilter === 'All' ? orders : orders.filter(o => (o.status || '').toLowerCase() === statusFilter.toLowerCase() || (statusFilter === 'In Progress' && (o.status || '').toLowerCase() === 'pending'));
+  // Show loader overlay but keep tabs visible
+  if (loading) {
+    return (
+      <div className="px-4 py-8 max-w-4xl text-gray-600 bg-white">
+        {/* Breadcrumb */}
+        <nav className="text-xs text-gray-500 mb-6 flex items-center gap-2">
+          <span className="cursor-pointer" onClick={() => window.location.href = '/'}>Home</span>
+          <span className="mx-1">/</span>
+          <span className="cursor-pointer" onClick={() => window.location.href = '/user/userprofile'}>My Account</span>
+          <span className="mx-1">/</span>
+          <span className="font-bold text-gray-700">My Orders</span>
+        </nav>
+        <div className="flex flex-wrap items-center justify-between mb-6 gap-2">
+          <div className="flex gap-2">
+            {statusTabs.map(tab => (
+              <button
+                key={tab.value}
+                onClick={() => setStatusFilter(tab.value)}
+                className={`px-4 py-1 rounded-full border text-sm font-normal transition-colors duration-150 focus:outline-none ${statusFilter === tab.value ? 'bg-red-100 text-red-700 border-red-300' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'}`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          <button className="text-sm text-gray-600 border border-gray-200 rounded-lg px-4 py-1 bg-white hover:bg-gray-50 flex items-center gap-1 mt-2 md:mt-0">
+            Select date range <ChevronRight size={16} />
+          </button>
+        </div>
+        <div className="flex flex-col items-center justify-center min-h-[200px]">
+          <span className="mb-6">
+            <svg className="animate-spin h-16 w-16 text-pink-500" viewBox="0 0 50 50">
+              <defs>
+                <linearGradient id="loader-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#ec4899" />
+                  <stop offset="40%" stopColor="#f472b6" />
+                  <stop offset="80%" stopColor="#f9a8d4" />
+                  <stop offset="100%" stopColor="#f472b6" />
+                </linearGradient>
+              </defs>
+              <circle
+                cx="25"
+                cy="25"
+                r="20"
+                fill="none"
+                stroke="url(#loader-gradient)"
+                strokeWidth="6"
+                strokeDasharray="90 60"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+          <span className="text-lg font-bold bg-gradient-to-r from-pink-400 via-yellow-400 to-purple-400 bg-clip-text text-transparent animate-pulse">Loading your orders...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // No need to filter orders on frontend, backend returns filtered data
+  const filteredOrders = orders;
 
   return (
     <div className="px-4 py-8 max-w-4xl text-gray-600 bg-white">
@@ -125,9 +170,17 @@ const MyOrders = () => {
       </div>
 
       {/* Orders List */}
-      {filteredOrders.length === 0 ? (
-        <p className="text-center text-lg text-gray-600">No orders found.</p>
-      ) : (
+      {error && (
+        <div className="flex items-center justify-center min-h-[200px]">
+          <span className="text-center text-base font-normal text-gray-600">{error}</span>
+        </div>
+      )}
+      {filteredOrders.length === 0 && !error && (
+        <div className="flex items-center justify-center min-h-[200px]">
+          <span className="text-center text-base font-normal text-gray-600">No orders found.</span>
+        </div>
+      )}
+      {filteredOrders.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-start">
           {filteredOrders.map((order) => (
             <div

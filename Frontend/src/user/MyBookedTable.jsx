@@ -6,7 +6,7 @@ import UserContext from "../context/UseContext";
 
 // 1. Skeleton Loader Component
 const ReservationSkeleton = () => (
-  <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-pink-700/70 animate-pulse">
+  <div className="bg-white p-6 rounded-xl shadow-lg animate-pulse">
     <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
       {/* Details Area Skeleton */}
       <div className="flex-1 min-w-0">
@@ -64,7 +64,7 @@ const ErrorMessage = ({ message, onRetry }) => (
   </div>
 );
 
-const MyReservations = () => {
+const MyBookedTables = () => {
   const { user, token } = useContext(UserContext);
   const [reservations, setReservations] = useState([]);
   const [timeLeft, setTimeLeft] = useState({});
@@ -166,13 +166,13 @@ const MyReservations = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="min-h-screen bg-white p-4 sm:p-6 lg:p-8">
         <div className="max-w-4xl mx-auto">
           <header className="mb-8 text-center">
-            <h1 className="text-4xl font-extrabold text-pink-700 tracking-tight">
-              My Reserved Tables 🍽️
+            <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 tracking-tight drop-shadow-lg" style={{ fontFamily: 'Poppins, cursive' }}>
+              My Reserved Tables <span role="img" aria-label="table">🍽️</span>
             </h1>
-            <p className="text-gray-500 mt-2">
+            <p className="text-gray-500 mt-2 text-lg font-medium">
               Loading your bookings with advanced UI...
             </p>
           </header>
@@ -187,16 +187,16 @@ const MyReservations = () => {
 
   if (error)
     return (
-      <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+      <div className="min-h-screen bg-white p-4 sm:p-6 lg:p-8">
         <ErrorMessage message={error} onRetry={fetchReservations} />
       </div>
     );
 
   if (!reservations.length)
     return (
-      <div className="text-center p-12 bg-white rounded-xl shadow-lg m-6 max-w-4xl mx-auto">
+      <div className="text-center p-12 bg-white/80 rounded-2xl shadow-2xl m-6 max-w-4xl mx-auto border border-pink-100">
         <svg
-          className="mx-auto h-12 w-12 text-pink-500"
+          className="mx-auto h-14 w-14 text-pink-400 drop-shadow-lg"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -209,78 +209,82 @@ const MyReservations = () => {
             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
           />
         </svg>
-        <h3 className="mt-2 text-lg font-semibold text-gray-900">
+        <h3 className="mt-4 text-xl font-bold text-pink-700">
           No Reservations Found
         </h3>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-2 text-base text-gray-500">
           Looks like you haven't made any reservations yet.
         </p>
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-white p-4 sm:p-6 lg:p-8">
       <div className="max-w-4xl mx-auto">
         <header className="mb-8">
-          <h1 className="text-4xl font-extrabold text-pink-700 text-center tracking-tight">
-            My Reserved Tables 🍽️
-          </h1>
-          <p className="text-center text-gray-500 mt-2">
+          <div className="flex justify-center items-center">
+            <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 text-center tracking-tight drop-shadow-lg" style={{ fontFamily: 'Poppins, cursive' }}>
+              My Booked Tables
+            </h1>
+            <span role="img" aria-label="table" className="ml-3 text-3xl align-middle">🍽️</span>
+          </div>
+          <p className="text-center text-gray-500 mt-2 text-lg font-medium">
             View and manage your upcoming and past bookings.
           </p>
         </header>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           {reservations.map((resv) => (
             <div
               key={resv._id}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 ease-in-out border-t-4 border-pink-700/70 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0"
+              className="bg-white/90 p-7 rounded-2xl transition duration-300 ease-in-out border border-grey-100 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0"
+              style={{ backdropFilter: 'blur(2px)' }}
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center space-x-3 mb-2">
                   <span
-                    className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset ${getStatusClasses(
+                    className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${getStatusClasses(
                       resv.status
                     )}`}
                   >
                     {resv.status.toUpperCase()}
                   </span>
-                  <h2 className="text-xl font-semibold text-gray-900 truncate">
-                    Reservation for{" "}
-                    {new Date(resv.date).toLocaleDateString("en-IN", {
-                      weekday: "short",
-                      month: "short",
-                      day: "numeric",
+                  <h2 className="text-xl font-medium text-pink-700 truncate">
+                    Reservation for{' '}
+                    {new Date(resv.date).toLocaleDateString('en-IN', {
+                      weekday: 'short',
+                      month: 'short',
+                      day: 'numeric',
                     })}
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-base text-gray-700">
                   <p className="font-medium col-span-2">
-                    <span className="text-gray-500">Tables:</span>{" "}
+                    <span className="text-gray-500">Tables:</span>{' '}
                     <span className="font-semibold text-pink-700/90">
-                      {resv.tableIds.map((t) => t?.name || "N/A").join(", ")}
+                      {resv.tableIds.map((t) => t?.name || 'N/A').join(', ')}
                     </span>
                   </p>
                   <p>
-                    <span className="text-gray-500">From:</span>{" "}
+                    <span className="text-gray-500">From:</span>{' '}
                     {formatTime(resv.startTime)}
                   </p>
                   <p>
-                    <span className="text-gray-500">To:</span>{" "}
+                    <span className="text-gray-500">To:</span>{' '}
                     {formatTime(resv.endTime)}
                   </p>
                   {/* 🆕 Time Left */}
                   <p className="col-span-2 text-blue-600 font-semibold">
-                    ⏳ Time Left: {timeLeft[resv._id] || "Calculating..."}
+                    ⏳ Time Left: {timeLeft[resv._id] || 'Calculating...'}
                   </p>
                 </div>
               </div>
 
-              {resv.status === "confirmed" && (
+              {resv.status === 'confirmed' && (
                 <button
                   onClick={() => handleCancel(resv._id, resv.startTime)}
-                  className="w-full md:w-auto px-6 py-2 text-sm font-semibold rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-150 ease-in-out shadow-md hover:shadow-lg disabled:opacity-50 mt-4 md:mt-0"
+                  className="w-full md:w-auto px-7 py-2 text-base font-semibold rounded-xl text-white bg-gradient-to-r from-pink-500 to-rose-400 hover:from-rose-500 hover:to-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transition duration-150 ease-in-out shadow-md hover:shadow-lg disabled:opacity-50 mt-4 md:mt-0"
                 >
                   Cancel Reservation
                 </button>
@@ -293,4 +297,4 @@ const MyReservations = () => {
   );
 };
 
-export default MyReservations;
+export default MyBookedTables;

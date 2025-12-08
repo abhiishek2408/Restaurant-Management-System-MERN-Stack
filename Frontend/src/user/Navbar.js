@@ -15,7 +15,6 @@ document.head.appendChild(fontLink);
 // Helper components and data can be moved to a separate file for better organization
 const navLinks = [
   { name: "Home", path: "/user" },
-  { name: "About", path: "/user/about" },
   { name: "Menu", path: "/user/categorymenu" },
 ];
 
@@ -27,8 +26,8 @@ const dropdownLinks = [
 
 const profileLinks = [
   { name: "View Profile", path: "/user/userprofile" },
-  { name: "Reserved Table", path: "/user/reservations" },
-  { name: "Reserved Event", path: "/user/event-reservations" },
+  { name: "About", path: "/user/about" },
+
 ];
 
 const Navbar = () => {
@@ -74,29 +73,35 @@ const Navbar = () => {
   }, []);
 
   const getNavLinkClasses = (path) =>
-    `text-base font-light tracking-widest text-white cursor-pointer transition-all duration-200 
+    `text-base font-light tracking-widest text-gray-600 cursor-pointer transition-all duration-200 
     ${
       routerLocation.pathname === path || routerLocation.pathname.startsWith(path)
-        ? "font-light text-yellow-200"
-        : "text-white hover:text-yellow-100"
+        ? "font-light text-grey-600"
+        : "text-gray-600 hover:text-pink-500"
     }`;
 
-  const Dropdown = ({ children, isOpen, containerRef, closeDropdown, origin = 'right' }) => {
+  const Dropdown = ({ children, isOpen, containerRef, closeDropdown, origin = 'right', type }) => {
     if (!isOpen) return null;
+    // Profile and Categories dropdown get special styling
+    const isProfile = type === 'profile';
+    const isCategories = type === 'categories';
     return (
       <div
         ref={containerRef}
-        className={`absolute ${origin === 'right' ? 'right-0' : 'left-0'} mt-2 min-w-[180px] bg-gradient-to-br from-pink-50 via-white to-pink-100 rounded-2xl shadow-2xl border-2 border-pink-200 py-3 flex flex-col gap-1 z-50 transform origin-top transition-transform duration-200 scale-100 opacity-100 backdrop-blur-md`}
-        style={{ boxShadow: '0 8px 32px 0 rgba(236, 72, 153, 0.18)' }}
+        className={`absolute ${origin === 'right' ? 'right-0' : 'left-0'} mt-2 min-w-[200px] ${isProfile || isCategories ? 'bg-gradient-to-br from-pink-100 via-white to-yellow-100 border-2 border-gray-300 shadow-2xl' : 'bg-gradient-to-br from-pink-50 via-white to-pink-100 border-2 border-gray-300 shadow-2xl'} rounded-2xl py-4 flex flex-col gap-2 z-50 transform origin-top transition-transform duration-200 scale-100 opacity-100 backdrop-blur-md`}
+        style={{ boxShadow: isProfile || isCategories ? '0 12px 36px 0 rgba(236, 72, 153, 0.22)' : '0 8px 32px 0 rgba(236, 72, 153, 0.18)' }}
       >
-        {React.Children.map(children, (child) =>
+        {React.Children.map(children, (child, idx) =>
           React.cloneElement(child, {
             onClick: () => {
               if (child.props.onClick) child.props.onClick();
               closeDropdown();
             },
             className:
-              'px-5 py-2 text-pink-700 font-semibold rounded-xl hover:bg-pink-100 hover:text-pink-900 transition-all duration-150 cursor-pointer',
+              (isProfile || isCategories
+                ? 'px-6 py-3 text-gray-600 font-normal rounded-xl bg-white/70 hover:text-gray-900 shadow-sm transition-all duration-200 cursor-pointer border-b border-gray-200 last:border-b-0 text-center flex justify-center items-center'
+                : 'px-5 py-2 text-grey-700 font-semibold rounded-xl hover:bg-pink-100 hover:text-pink-900 transition-all duration-150 cursor-pointer')
+              + (idx === 0 ? ' mt-0' : '')
           })
         )}
       </div>
@@ -105,14 +110,14 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 backdrop-blur-lg bg-pink-500 border-b border-pink-700 px-4 sm:px-10 py-3 flex items-center justify-between font-sans shadow-md">
+      <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white border-b border-pink-200 px-4 sm:px-10 py-5 flex items-center justify-between font-sans shadow-md">
         {/* Curly Logo */}
-        <h1
-          className="text-2xl font-extrabold select-none drop-shadow-lg flex items-center"
-          style={{ fontFamily: 'Pacifico, cursive', letterSpacing: '2px', color: '#fff', textShadow: '0 2px 8px #be185d' }}
-        >
-          Bistro<span style={{ color: '#ffe4fa', marginLeft: 2 }}>fy</span>
-        </h1>
+          <h1
+            className="text-2xl font-extrabold select-none drop-shadow-lg flex items-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-fuchsia-500 to-yellow-400 pb-1"
+            style={{ fontFamily: 'Pacifico, cursive', letterSpacing: '2px', lineHeight: '1.5' }}
+          >
+            Bistro<span className="ml-0">fy</span>
+          </h1>
         {/* Location Button - hide on small screens */}
         <button
           type="button"
@@ -122,7 +127,7 @@ const Navbar = () => {
           title={displayLocation}
         >
           <span className="relative flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-pink-500 animate-pulse" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-grey-500 animate-pulse" viewBox="0 0 20 20" fill="currentColor">
               <defs>
                 <radialGradient id="locBtnGradient" cx="50%" cy="50%" r="80%">
                   <stop offset="0%" stopColor="#f9a8d4" />
@@ -133,7 +138,7 @@ const Navbar = () => {
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 10 100-4 2 2 0 000 4z" clipRule="evenodd" fill="#ec4899" />
             </svg>
           </span>
-          <span className="ml-2 text-base font-semibold text-pink-700 drop-shadow-sm whitespace-nowrap">
+          <span className="ml-2 text-base font-semibold text-grey-700 drop-shadow-sm whitespace-nowrap">
             {displayLocation || "Detecting location..."}
           </span>
         </button>
@@ -142,7 +147,7 @@ const Navbar = () => {
         <ul className="hidden sm:flex gap-8 items-center font-medium text-gray-800">
           {navLinks.map((link) => (
             <li key={link.name}>
-              <Link to={link.path} className={getNavLinkClasses(link.path) + ' hover:scale-110 hover:bg-pink-600 hover:text-white rounded-lg px-2 py-1 transition-transform'}>
+              <Link to={link.path} className={getNavLinkClasses(link.path) + ' hover:scale-110 hover:bg-pink-50 hover:text-pink-600 rounded-lg px-2 py-1 transition-transform'}>
                 {link.name}
               </Link>
             </li>
@@ -153,12 +158,12 @@ const Navbar = () => {
             <button
               onClick={() => setIsCategoriesOpen(!isCategoriesOpen)}
               className={`text-base font-semibold cursor-pointer flex items-center gap-2 bg-gradient-to-r from-pink-100 to-pink-200 px-3 py-1 rounded-lg shadow-sm border border-pink-200 transition-all duration-200 ${
-                isCategoriesOpen ? "text-pink-600 scale-105" : "text-gray-800 hover:text-pink-500 hover:scale-105"
+                isCategoriesOpen ? "text-grey-600 scale-105" : "text-gray-600 hover:text-pink-500 hover:scale-105"
               }`}
             >
               Categories <FaChevronDown className={`h-5 w-5 transition-transform duration-200 ${isCategoriesOpen ? 'rotate-180' : ''}`} />
             </button>
-            <Dropdown isOpen={isCategoriesOpen} containerRef={categoriesRef} closeDropdown={() => setIsCategoriesOpen(false)}>
+            <Dropdown isOpen={isCategoriesOpen} containerRef={categoriesRef} closeDropdown={() => setIsCategoriesOpen(false)} type="categories">
               {dropdownLinks.map((link) => (
                 <Link key={link.name} to={link.path}>
                   {link.name}
@@ -170,7 +175,7 @@ const Navbar = () => {
           {/* Login/Cart/Profile */}
           {!user ? (
             <li className="relative">
-              <Link to="/login" className="px-5 py-2 text-base font-bold text-white bg-gradient-to-r from-pink-500 to-rose-500 rounded-full shadow-md hover:from-rose-500 hover:to-pink-500 hover:scale-105 transition-all duration-200">
+              <Link to="/login" className="px-5 py-2 text-base font-bold text-gray-600 bg-gradient-to-r from-pink-100 to-rose-100 rounded-full shadow-md hover:from-rose-200 hover:to-pink-200 hover:text-pink-600 hover:scale-105 transition-all duration-200">
                 Login
               </Link>
             </li>
@@ -180,7 +185,7 @@ const Navbar = () => {
                 <Link to="/user/cart" className="relative text-3xl hover:scale-125 transition-transform duration-200">
                   <GiShoppingCart className="h-8 w-8" style={{ filter: 'drop-shadow(0 2px 6px #f472b6)' }} />
                   {cartLength > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-white text-pink-600 text-xs font-bold px-2 rounded-full border-2 border-pink-400 animate-bounce shadow-md" style={{ minWidth: 20, textAlign: 'center' }}>
+                    <span className="absolute -top-2 -right-2 bg-white text-grey-600 text-xs font-bold px-2 rounded-full border-2 border-pink-400 animate-bounce shadow-md" style={{ minWidth: 20, textAlign: 'center' }}>
                       {cartLength}
                     </span>
                   )}
@@ -200,7 +205,7 @@ const Navbar = () => {
                   />
                   <FaChevronDown className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
                 </button>
-                <Dropdown isOpen={isProfileOpen} containerRef={profileRef} closeDropdown={() => setIsProfileOpen(false)}>
+                <Dropdown isOpen={isProfileOpen} containerRef={profileRef} closeDropdown={() => setIsProfileOpen(false)} type="profile">
                   {profileLinks.map((link) => (
                     <Link key={link.name} to={link.path}>
                       {link.name}
@@ -208,7 +213,7 @@ const Navbar = () => {
                   ))}
                   <button
                     onClick={handleLogout}
-                    className="text-left w-full px-4 py-2 text-rose-600 font-semibold hover:bg-pink-50 transition-colors"
+                    className="text-left w-full px-6 py-3 text-rose-600 font-semibold rounded-xl bg-white/70 hover:bg-gradient-to-r hover:from-pink-200 hover:to-yellow-100 hover:text-rose-700 shadow-sm transition-all duration-200 cursor-pointer border-b border-pink-100 last:border-b-0"
                   >
                     Logout
                   </button>

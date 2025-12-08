@@ -158,7 +158,7 @@ function About() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Mission Card */}
-            <div className="bg-white p-6 rounded-xl border-2 border-pink-200">
+            <div className="bg-white p-6 rounded-xl border-2 border-gray-200">
               {isLoading ? (
                 <>
                   <SkeletonLoader className="h-12 w-12 mx-auto mb-4" />
@@ -179,7 +179,7 @@ function About() {
             </div>
 
             {/* Vision Card */}
-            <div className="bg-white p-6 rounded-xl border-2 border-pink-200">
+            <div className="bg-white p-6 rounded-xl border-2 border-gray-200">
               {isLoading ? (
                 <>
                   <SkeletonLoader className="h-12 w-12 mx-auto mb-4" />
@@ -230,7 +230,7 @@ function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
               [...Array(3)].map((_, index) => (
-                <div key={index} className="bg-white p-6 rounded-xl border-2 border-pink-200">
+                <div key={index} className="bg-white p-6 rounded-xl border-2 border-gray-200">
                   <SkeletonLoader className="h-12 w-12 mx-auto mb-4" />
                   <SkeletonLoader className="h-6 w-3/4 mx-auto mb-2" />
                   <SkeletonLoader count={2} className="h-4 w-full mb-2" />
@@ -238,7 +238,7 @@ function About() {
               ))
             ) : (
               data.locations.map((location) => (
-                <div key={location.id} className="bg-white p-6 rounded-xl border-2 border-pink-200">
+                <div key={location.id} className="bg-white p-6 rounded-xl border-2 border-gray-200">
                   <div className="flex items-center justify-center text-pink-600 mb-4">
                     <MapPin size={48} />
                   </div>

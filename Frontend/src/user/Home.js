@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <div className="max-w-7xl mx-auto py-10 px-5 sm:px-10">
       {/* Banner */}
-      <div className="bg-gradient-to-br from-pink-400 via-pink-300 to-pink-200 text-white p-4 sm:p-8 rounded-3xl backdrop-blur-sm flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-8 md:gap-0">
+      <div className="bg-gradient-to-br from-pink-400 via-pink-300 to-pink-200 text-white p-4 sm:p-8 rounded-3xl backdrop-blur-sm flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-8 md:gap-0 border border-pink-200/60 shadow-sm">
         {/* Left Text */}
         <div className="max-w-lg space-y-2 sm:space-y-4 text-center md:text-left">
           <h1 className="text-3xl sm:text-6xl font-extrabold tracking-tight drop-shadow-lg">
@@ -91,7 +91,7 @@ const Home = () => {
                 <button
                   key={idx}
                   onClick={() => navigate(`/user/menu/${item.menu}`)}
-                  className="flex flex-col items-center justify-center space-y-2 p-3 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
+                  className="flex flex-col items-center justify-center space-y-2 p-3 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 transition duration-300 focus:outline-none focus:ring-2 focus:ring-pink-100/60 shadow-sm"
                   type="button"
                 >
                   <img
